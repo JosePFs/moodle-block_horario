@@ -1,13 +1,19 @@
 # horario
 
 This is a simple block plugin for Moodle.
-It allows you to restrict access to courses when the block is located in a course.
-Permission is granted to each user and is performed using cohorts. Access is set for days, hours and minutes.
+It allows you to restrict/allow access to courses when the block is located in a course.
+Permission is granted to user using cohorts. Access schedule is set using week days, hours and minutes.
 
-To create a restriction block:
+There are two modes:
+* Restrict user access in a time range.
+* Allow user access in a time range.
+
+To create a course schedule block.
 Active edition and add the block "Course Schedule".
 Click Settings and select:
-* Cohort to which it is applied the restriction
+* Access mode: allow or restrict access
+* Cohort to which it is applied
 * Week days
-* Schedule.
-* Common settings of block.
+* Schedule
+* Show block: show schedule information to students
+* Common settings
