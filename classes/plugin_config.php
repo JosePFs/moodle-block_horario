@@ -42,6 +42,8 @@ class plugin_config {
     private $minutefrom;
     private $hourto;
     private $minuteto;
+    private $showblock;
+    private $restrictmode;
 
     public function get_cohorts() {
         return $this->cohorts;
@@ -67,6 +69,14 @@ class plugin_config {
         return $this->minuteto;
     }
 
+    public function get_show_block() {
+        return $this->showblock;
+    }
+
+    public function get_restrict_mode() {
+        return $this->restrictmode;
+    }
+
     public function set_cohorts($cohorts) {
         $this->cohorts = $cohorts;
     }
@@ -89,6 +99,14 @@ class plugin_config {
 
     public function set_minute_to($minuteto) {
         $this->minuteto = $minuteto;
+    }
+
+    public function set_show_block($showblock) {
+        $this->showblock = $showblock;
+    }
+
+    public function set_restrict_mode($restrictmode) {
+        $this->restrictmode = $restrictmode;
     }
 
     public function get_time_from() {

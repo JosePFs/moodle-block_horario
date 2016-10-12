@@ -59,9 +59,15 @@ class block_horario_renderer extends plugin_renderer_base {
      * @return string $output
      */
     public function text(plugin_config $pluginconfig) {
-        $output = html_writer::tag('p', $pluginconfig->get_week_days());
+        if ($pluginconfig->get_restrict_mode()) {
+            $mode = get_string('restricted_access', 'block_horario');
+        } else {
+            $mode = get_string('granted_access', 'block_horario');
+        }
+        $output = html_writer::tag('p', $mode);
+        $output .= html_writer::tag('p', $pluginconfig->get_week_days());
         $output .= html_writer::tag('p',
-                '[' . $pluginconfig->get_time_from() .
+                '[ ' . $pluginconfig->get_time_from() .
                 ' - ' . $pluginconfig->get_time_to() .
                 ' ]'
                 );

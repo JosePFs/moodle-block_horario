@@ -146,19 +146,21 @@ class helper {
      * @return boolean
      */
     private function is_allowed_time_interval() {
+        $restrictmode = (bool) $this->pluginconfig->get_restrict_mode();
+        $isallowedinterval = !$restrictmode;
         $today = new \DateTime();
         $todayday = (int) $today->format('w');
         if (!in_array($todayday, $this->pluginconfig->get_days())) {
-            return false;
+            $isallowedinterval = !$isallowedinterval;
         }
 
         $startdatetime = $this->get_start_datetime($today);
         $enddatetime = $this->get_end_datetime($today);
-        if ($this->is_datetime_in_interval($today, $startdatetime, $enddatetime)) {
-            return true;
+        if ($this->is_not_datetime_in_interval($today, $startdatetime, $enddatetime)) {
+            $isallowedinterval = !$isallowedinterval;
         }
 
-        return false;
+        return $isallowedinterval;
     }
 
     /**
@@ -170,16 +172,16 @@ class helper {
      * @param \DateTime $enddatetime
      * @return boolean
      */
-    private function is_datetime_in_interval(\DateTime $today, \DateTime $startdatetime, \DateTime $enddatetime) {
+    private function is_not_datetime_in_interval(\DateTime $today, \DateTime $startdatetime, \DateTime $enddatetime) {
         $todayhour = $today->format('Hi');
         $startdatetimehour = $startdatetime->format('Hi');
         $enddatetimehour = $enddatetime->format('Hi');
 
         if ($startdatetimehour <= $todayhour && $todayhour <= $enddatetimehour) {
-            return true;
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     /**

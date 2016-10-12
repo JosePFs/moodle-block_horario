@@ -105,9 +105,11 @@ class block_horario_helper_testcase extends advanced_testcase {
 
     /**
      * Test course no available cohort member and no admin user
+     * Restricted mode on. User can not view course in the shedule.
+     *
      * @return void
      */
-    public function test_course_no_available_cohort_no_admin_user() {
+    public function test_course_no_available_no_admin_user_retrict_mode() {
         $this->resetAfterTest(true);
         $user = $this->getDataGenerator()->create_user();
         $this->setUser($user);
@@ -117,8 +119,9 @@ class block_horario_helper_testcase extends advanced_testcase {
         $config->days = ['0', '1', '2', '3', '4', '5', '6'];
         $config->hour_from = '0';
         $config->minute_from = '0';
-        $config->hour_to = '0';
-        $config->minute_to = '0';
+        $config->hour_to = '23';
+        $config->minute_to = '59';
+        $config->restrict_mode = 1;
 
         $helper = $this->getMockBuilder('\block_horario\helper')
                 ->setMethods(array('user_is_not_in_cohort'))
@@ -134,4 +137,37 @@ class block_horario_helper_testcase extends advanced_testcase {
         $this->assertEquals(false, $iscourseadmin);
     }
 
+    /**
+     * Test course no available cohort member and no admin user
+     * Restricted mode off. User can view course in the shedule.
+     *
+     * @return void
+     */
+    public function test_course_no_available_no_admin_user_allowed_mode() {
+        $this->resetAfterTest(true);
+        $user = $this->getDataGenerator()->create_user();
+        $this->setUser($user);
+
+        $config = new \stdClass();
+        $config->cohorts = ['1'];
+        $config->days = ['0', '1', '2', '3', '4', '5', '6'];
+        $config->hour_from = '0';
+        $config->minute_from = '0';
+        $config->hour_to = '23';
+        $config->minute_to = '59';
+        $config->restrict_mode = 0;
+
+        $helper = $this->getMockBuilder('\block_horario\helper')
+                ->setMethods(array('user_is_not_in_cohort'))
+                ->setConstructorArgs(array($config))
+                ->getMock();
+
+        $helper->expects($this->once())
+            ->method('user_is_not_in_cohort')
+            ->will($this->returnValue(false));
+
+        $iscourseadmin = $helper->is_current_course_available();
+
+        $this->assertEquals(true, $iscourseadmin);
+    }
 }

@@ -81,14 +81,28 @@ class block_horario extends block_base {
 
         $this->content = new stdClass;
         $this->content->footer = '';
-        if (isset($this->helper) && $this->helper->is_course_admin()) {
-            $renderer = $this->page->get_renderer('block_horario');
-            $this->content->text = $renderer->text($this->helper->get_plugin_config());
+        $blockisconfigured = isset($this->helper);
+        if ($blockisconfigured && $this->helper->is_course_admin()) {
+            $this->content->text = $this->get_text();
+        } else if ($blockisconfigured && $this->helper->get_plugin_config()->get_show_block()) {
+            $this->content->text = $this->get_text();
         } else {
             $this->content->text = '';
         }
 
         return $this->content;
+    }
+
+    /**
+     * Returns block text.
+     *
+     * @return string $text
+     */
+    private function get_text() {
+        $renderer = $this->page->get_renderer('block_horario');
+        $text = $renderer->text($this->helper->get_plugin_config());
+
+        return $text;
     }
 
     /**
@@ -100,9 +114,14 @@ class block_horario extends block_base {
     private function prepare_notification() {
         global $SESSION;
 
+        $pluginconfig = $this->helper->get_plugin_config();
         $renderer = $this->page->get_renderer('block_horario');
-        $schedule = $renderer->flash_notification($this->helper->get_plugin_config());
+        $schedule = $renderer->flash_notification($pluginconfig);
 
-        $SESSION->block_horario_flash = get_string('error', 'block_horario', $schedule);
+        if ($pluginconfig->get_restrict_mode()) {
+            $SESSION->block_horario_flash = get_string('error_restricted_mode', 'block_horario', $schedule);
+        } else {
+            $SESSION->block_horario_flash = get_string('error_allowed_mode', 'block_horario', $schedule);
+        }
     }
 }

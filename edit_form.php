@@ -38,6 +38,14 @@ class block_horario_edit_form extends block_edit_form {
     protected function specific_definition($mform) {
         $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
 
+        // Select restriction mode.
+        $restrict = array();
+        $restrict[] = $mform->createElement('radio', 'config_restrict_mode', '', get_string('yes'), 1, array());
+        $restrict[] = $mform->createElement('radio', 'config_restrict_mode', '', get_string('no'), 0, array());
+        $mform->addGroup($restrict, 'config_restrict_mode', get_string('restrict_mode', 'block_horario'), array(' '), false);
+        $mform->setDefault('config_restrict_mode', 1);
+        $mform->addHelpButton('config_restrict_mode', 'config_restrict_mode', 'block_horario');
+
         // Select cohorts.
         $cohortsoptions = edit_helper::get_cohorts_options();
         $selectcohorts = $mform->addElement(
@@ -48,6 +56,7 @@ class block_horario_edit_form extends block_edit_form {
                 array()
                 );
         $selectcohorts->setMultiple(true);
+        $mform->addHelpButton('config_cohorts', 'config_cohorts', 'block_horario');
 
         // Select week days.
         $daysoptions = edit_helper::get_days_options();
@@ -98,6 +107,14 @@ class block_horario_edit_form extends block_edit_form {
                 $minuteoptions,
                 array()
                 );
+
+        // Select show block to student.
+        $showblock = array();
+        $showblock[] = $mform->createElement('radio', 'config_show_block', '', get_string('yes'), 1, array());
+        $showblock[] = $mform->createElement('radio', 'config_show_block', '', get_string('no'), 0, array());
+        $mform->addGroup($showblock, 'config_show_block', get_string('show_block', 'block_horario'), array(' '), false);
+        $mform->setDefault('config_show_block', 0);
+        $mform->addHelpButton('config_show_block', 'config_show_block', 'block_horario');
     }
 
     public function validation($data) {
