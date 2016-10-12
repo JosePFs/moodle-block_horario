@@ -34,3 +34,4 @@ $string['saturday'] = 'Saturday';
 $string['page_title'] = 'Course not available at this moment';
 $string['page_heading'] = 'Course not available at this moment';
 $string['error'] = 'You can not access the course at the moment. Allowed schedule: {$a}';
+$string['from_to_interval_error'] = 'To time must be greater than from time';

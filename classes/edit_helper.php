@@ -35,27 +35,38 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class edit_helper {
-    
+
     const MAX_HOUR = 24;
     const MAX_MINUTE = 59;
     const STEP = 1;
-    
+
+    /**
+     * Returns all cohorts.
+     *
+     * @global stdClass $CFG
+     * @return array $cohortsoptions
+     */
     public static function get_cohorts_options() {
         global $CFG;
         require_once("$CFG->dirroot/cohort/lib.php");
-        
+
         $cohorts = \cohort_get_all_cohorts();
-        
-        $cohorts_options = array();
+
+        $cohortsoptions = array();
         foreach ($cohorts['cohorts'] as $cohort) {
-            $cohorts_options[$cohort->id] = strip_tags($cohort->description);
+            $cohortsoptions[$cohort->id] = strip_tags($cohort->description);
         }
-        
-        return $cohorts_options;
+
+        return $cohortsoptions;
     }
 
+    /**
+     * Returns week days.
+     *
+     * @return array $daysoptions
+     */
     public static function get_days_options() {
-        $days_options = [
+        $daysoptions = [
             get_string('sunday', 'block_horario'),
             get_string('monday', 'block_horario'),
             get_string('tuesday', 'block_horario'),
@@ -64,10 +75,15 @@ class edit_helper {
             get_string('friday', 'block_horario'),
             get_string('saturday', 'block_horario'),
         ];
-        
-        return $days_options;
+
+        return $daysoptions;
     }
-    
+
+    /**
+     * Returns array hour for select element.
+     *
+     * @return array $hours
+     */
     public static function get_hour_options() {
         $hours = array();
         for ($index = 0; $index < self::MAX_HOUR; $index += self::STEP) {
@@ -75,8 +91,12 @@ class edit_helper {
         }
         return $hours;
     }
-    
-    
+
+    /**
+     * Returns array minutes for select element.
+     *
+     * @return array $minutes
+     */
     public static function get_minute_options() {
         $minutes = array();
         for ($index = 0; $index <= self::MAX_MINUTE; $index += self::STEP) {

@@ -35,6 +35,12 @@ use block_horario\plugin_config;
  */
 class block_horario_renderer extends plugin_renderer_base {
 
+    /**
+     * Returns HTML error access to course message.
+     *
+     * @global stdClass $SESSION
+     * @return string $output
+     */
     public function shedule_message() {
         global $SESSION;
 
@@ -42,26 +48,39 @@ class block_horario_renderer extends plugin_renderer_base {
             $SESSION->block_horario_flash,
             array('class' => 'alert alert-error'));
         $output .= $this->continue_button('/');
-        
+
         return $output;
     }
-    
-    public function text(plugin_config $plugin_config) {
-        $output = html_writer::tag('p', $plugin_config->get_week_days());
-        $output .= html_writer::tag('p', 
-                '[' . $plugin_config->get_time_from() . 
-                ' - ' . $plugin_config->get_time_to() . 
+
+    /**
+     * Returns HTML block text.
+     *
+     * @param plugin_config $pluginconfig
+     * @return string $output
+     */
+    public function text(plugin_config $pluginconfig) {
+        $output = html_writer::tag('p', $pluginconfig->get_week_days());
+        $output .= html_writer::tag('p',
+                '[' . $pluginconfig->get_time_from() .
+                ' - ' . $pluginconfig->get_time_to() .
                 ' ]'
                 );
-        
+
         return $output;
     }
-    
-    public function flash_notification(plugin_config $plugin_config) {
-        $output = $plugin_config->get_week_days() . ' [ ';
-        $output .= $plugin_config->get_time_from() . ' - ' . 
-                    $plugin_config->get_time_to() . ' ] ';
-        
+
+    /**
+     * Returns shedule course text that is shown
+     * in schedule message.
+     *
+     * @param plugin_config $pluginconfig
+     * @return string $output
+     */
+    public function flash_notification(plugin_config $pluginconfig) {
+        $output = $pluginconfig->get_week_days() . ' [ ';
+        $output .= $pluginconfig->get_time_from() . ' - ' .
+                    $pluginconfig->get_time_to() . ' ] ';
+
         return $output;
     }
 }

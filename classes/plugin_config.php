@@ -38,11 +38,11 @@ class plugin_config {
 
     private $cohorts;
     private $days;
-    private $hour_from;
-    private $minute_from;
-    private $hour_to;
-    private $minute_to;
-    
+    private $hourfrom;
+    private $minutefrom;
+    private $hourto;
+    private $minuteto;
+
     public function get_cohorts() {
         return $this->cohorts;
     }
@@ -52,19 +52,19 @@ class plugin_config {
     }
 
     public function get_hour_from() {
-        return $this->hour_from;
+        return $this->hourfrom;
     }
 
     public function get_minute_from() {
-        return $this->minute_from;
+        return $this->minutefrom;
     }
 
     public function get_hour_to() {
-        return $this->hour_to;
+        return $this->hourto;
     }
 
     public function get_minute_to() {
-        return $this->minute_to;
+        return $this->minuteto;
     }
 
     public function set_cohorts($cohorts) {
@@ -75,36 +75,36 @@ class plugin_config {
         $this->days = $days;
     }
 
-    public function set_hour_from($hour_from) {
-        $this->hour_from = $hour_from;
+    public function set_hour_from($hourfrom) {
+        $this->hourfrom = $hourfrom;
     }
 
-    public function set_minute_from($minute_from) {
-        $this->minute_from = $minute_from;
+    public function set_minute_from($minutefrom) {
+        $this->minutefrom = $minutefrom;
     }
 
-    public function set_hour_to($hour_to) {
-        $this->hour_to = $hour_to;
+    public function set_hour_to($hourto) {
+        $this->hourto = $hourto;
     }
 
-    public function set_minute_to($minute_to) {
-        $this->minute_to = $minute_to;
+    public function set_minute_to($minuteto) {
+        $this->minuteto = $minuteto;
     }
-    
+
     public function get_time_from() {
         $time = sprintf('%02d:%02d', $this->get_hour_from(), $this->get_minute_from());
-        
+
         return $time;
     }
-    
+
     public function get_time_to() {
         $time = sprintf('%02d:%02d', $this->get_hour_to(), $this->get_minute_to());
-        
+
         return $time;
     }
-    
+
     public function get_week_days() {
-        $days_names = [
+        $daysnames = [
             get_string('sunday', 'block_horario'),
             get_string('monday', 'block_horario'),
             get_string('tuesday', 'block_horario'),
@@ -114,10 +114,10 @@ class plugin_config {
             get_string('saturday', 'block_horario'),
         ];
         $days = array();
-        foreach ($this->get_days() as $day_index) {
-            $days[$day_index] = $days_names[$day_index];
+        foreach ($this->get_days() as $dayindex) {
+            $days[$dayindex] = $daysnames[$dayindex];
         }
-        
+
         return implode(',', $days);
     }
 }

@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 use block_horario\edit_helper;
 
 /**
@@ -32,69 +34,93 @@ use block_horario\edit_helper;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class block_horario_edit_form extends block_edit_form {
-    
+
     protected function specific_definition($mform) {
         $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
 
         // Select cohorts.
-        $cohorts_options = edit_helper::get_cohorts_options();
-        $select_cohorts = $mform->addElement(
+        $cohortsoptions = edit_helper::get_cohorts_options();
+        $selectcohorts = $mform->addElement(
                 'select',
                 'config_cohorts',
                 get_string('cohorts', 'block_horario'),
-                $cohorts_options,
+                $cohortsoptions,
                 array()
                 );
-        $select_cohorts->setMultiple(true);
-        
+        $selectcohorts->setMultiple(true);
+
         // Select week days.
-        $days_options = edit_helper::get_days_options();
-        $select_days = $mform->addElement(
+        $daysoptions = edit_helper::get_days_options();
+        $selectdays = $mform->addElement(
                 'select',
                 'config_days',
                 get_string('days', 'block_horario'),
-                $days_options,
+                $daysoptions,
                 array()
                 );
-        $select_days->setMultiple(true);        
+        $selectdays->setMultiple(true);
 
-        $hour_options = edit_helper::get_hour_options();
-        $minute_options = edit_helper::get_minute_options();
-        
+        $houroptions = edit_helper::get_hour_options();
+        $minuteoptions = edit_helper::get_minute_options();
+
         // Select hour from.
         $mform->addElement(
                 'select',
                 'config_hour_from',
                 get_string('hour_from', 'block_horario'),
-                $hour_options,
+                $houroptions,
                 array()
                 );
-        
+
         // Select minute from.
         $mform->addElement(
                 'select',
                 'config_minute_from',
                 get_string('minute_from', 'block_horario'),
-                $minute_options,
+                $minuteoptions,
                 array()
                 );
-        
+
         // Select hour to.
         $mform->addElement(
                 'select',
                 'config_hour_to',
                 get_string('hour_to', 'block_horario'),
-                $hour_options,
+                $houroptions,
                 array()
                 );
-        
+
         // Select minute to.
         $mform->addElement(
                 'select',
                 'config_minute_to',
                 get_string('minute_to', 'block_horario'),
-                $minute_options,
+                $minuteoptions,
                 array()
                 );
+    }
+
+    public function validation($data) {
+        $errors = array();
+        if ($this->is_from_greater_equal_to($data)) {
+            $errors['config_hour_from'] = get_string('from_to_interval_error', 'block_horario');
+        }
+
+        return $errors;
+    }
+
+    /**
+     * Checks to time is greater or equal from time.
+     *
+     * @param array $data
+     * @return boolean
+     */
+    private function is_from_greater_equal_to(array $data) {
+        $fromtime = new \DateTime();
+        $totime = clone $fromtime;
+        $fromtime->setTime($data['config_hour_from'], $data['config_minute_from']);
+        $totime->setTime($data['config_hour_to'], $data['config_minute_to']);
+
+        return $fromtime >= $totime;
     }
 }

@@ -22,6 +22,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
+
 use block_horario\helper;
 
 /**
@@ -35,11 +37,11 @@ class block_horario extends block_base {
 
     /** @var $helper \block_horario\helper */
     private $helper;
-    
-    function init() {
+
+    public function init() {
         $this->title = get_string('pluginname', 'block_horario');
     }
-    
+
     public function specialization() {
         if (isset($this->config)) {
             $this->helper = new helper($this->config);
@@ -50,11 +52,11 @@ class block_horario extends block_base {
         }
     }
 
-    function has_config() {
+    public function has_config() {
         return false;
     }
-    
-    function applicable_formats() {
+
+    public function applicable_formats() {
         return array(
                     'site-index' => false,
                     'course-view' => true,
@@ -64,16 +66,16 @@ class block_horario extends block_base {
                     );
     }
 
-    function instance_allow_multiple() {
+    public function instance_allow_multiple() {
         return true;
     }
-    
+
     public function instance_can_be_docked() {
         return true;
     }
 
-    function get_content() {
-        if ($this->content !== NULL) {
+    public function get_content() {
+        if (null !== $this->content) {
             return $this->content;
         }
 
@@ -88,13 +90,19 @@ class block_horario extends block_base {
 
         return $this->content;
     }
-    
+
+    /**
+     * Set flash error message.
+     *
+     * @global stdClass $SESSION
+     * @return void
+     */
     private function prepare_notification() {
         global $SESSION;
-        
+
         $renderer = $this->page->get_renderer('block_horario');
         $schedule = $renderer->flash_notification($this->helper->get_plugin_config());
-        
+
         $SESSION->block_horario_flash = get_string('error', 'block_horario', $schedule);
     }
 }

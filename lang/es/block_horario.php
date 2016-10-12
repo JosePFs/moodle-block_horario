@@ -34,3 +34,4 @@ $string['saturday'] = 'Sábado';
 $string['page_title'] = 'Curso no disponible en estos momentos';
 $string['page_heading'] = 'Curso no disponible en estos momentos';
 $string['error'] = 'No puedes acceder al curso en estos momentos. Horario: {$a}';
+$string['from_to_interval_error'] = 'Hora final desbe ser mayor que hora inicial';

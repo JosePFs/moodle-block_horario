@@ -39,35 +39,35 @@ use block_horario\plugin_config;
 class config_builder {
 
     private $config;
-    
-    private $config_object;
-    
+
+    private $configobject;
+
     public static function instance(\stdClass $config) {
         return new config_builder($config);
     }
-    
+
     public function __construct(\stdClass $config) {
         $this->config = $config;
-        $this->config_object = new plugin_config();
+        $this->configobject = new plugin_config();
     }
-    
+
     public function build() {
         foreach ($this->config as $key => $config) {
             $method = "set_$key";
-            if (method_exists($this->config_object, $method)) {
-                $this->config_object->{$method}($config);
+            if (method_exists($this->configobject, $method)) {
+                $this->configobject->{$method}($config);
             }
         }
-        
+
         return $this;
     }
-    
+
     /**
      * Returns built object.
-     * 
+     *
      * @return \block_horario\plugin_config
      */
     public function get_config() {
-        return $this->config_object;
+        return $this->configobject;
     }
 }

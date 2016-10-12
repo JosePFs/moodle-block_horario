@@ -44,13 +44,13 @@ class block_horario_helper_testcase extends advanced_testcase {
     public function test_course_admin_user() {
         $this->resetAfterTest(true);
         $this->setAdminUser();
-        
+
         $helper = new helper(new \stdClass());
-        $is_course_admin = $helper->is_course_admin();
-        
-        $this->assertEquals(true, $is_course_admin);
+        $iscourseadmin = $helper->is_course_admin();
+
+        $this->assertEquals(true, $iscourseadmin);
     }
-    
+
     /**
      * Test course no admin user
      * @return void
@@ -59,13 +59,13 @@ class block_horario_helper_testcase extends advanced_testcase {
         $this->resetAfterTest(true);
         $user = $this->getDataGenerator()->create_user();
         $this->setUser($user);
-        
+
         $helper = new helper(new \stdClass());
-        $is_course_admin = $helper->is_course_admin();
-        
-        $this->assertEquals(false, $is_course_admin);
+        $iscourseadmin = $helper->is_course_admin();
+
+        $this->assertEquals(false, $iscourseadmin);
     }
-    
+
     /**
      * Test course available admin user
      * @return void
@@ -73,13 +73,13 @@ class block_horario_helper_testcase extends advanced_testcase {
     public function test_course_available_admin_user() {
         $this->resetAfterTest(true);
         $this->setAdminUser();
-        
+
         $helper = new helper(new \stdClass());
-        $is_course_admin = $helper->is_current_course_available();
-        
-        $this->assertEquals(true, $is_course_admin);
+        $iscourseadmin = $helper->is_current_course_available();
+
+        $this->assertEquals(true, $iscourseadmin);
     }
-    
+
     /**
      * Test course available no cohort member and no admin user
      * @return void
@@ -88,7 +88,7 @@ class block_horario_helper_testcase extends advanced_testcase {
         $this->resetAfterTest(true);
         $user = $this->getDataGenerator()->create_user();
         $this->setUser($user);
-        
+
         $config = new \stdClass();
         $config->cohorts = ['1'];
         $config->days = ['0', '1', '2', '3', '4', '5', '6'];
@@ -96,13 +96,13 @@ class block_horario_helper_testcase extends advanced_testcase {
         $config->minute_from = '0';
         $config->hour_to = '0';
         $config->minute_to = '0';
-        
+
         $helper = new helper($config);
-        $is_course_admin = $helper->is_current_course_available();
-        
-        $this->assertEquals(true, $is_course_admin);
+        $iscourseadmin = $helper->is_current_course_available();
+
+        $this->assertEquals(true, $iscourseadmin);
     }
-    
+
     /**
      * Test course no available cohort member and no admin user
      * @return void
@@ -111,7 +111,7 @@ class block_horario_helper_testcase extends advanced_testcase {
         $this->resetAfterTest(true);
         $user = $this->getDataGenerator()->create_user();
         $this->setUser($user);
-        
+
         $config = new \stdClass();
         $config->cohorts = ['1'];
         $config->days = ['0', '1', '2', '3', '4', '5', '6'];
@@ -119,19 +119,19 @@ class block_horario_helper_testcase extends advanced_testcase {
         $config->minute_from = '0';
         $config->hour_to = '0';
         $config->minute_to = '0';
-        
+
         $helper = $this->getMockBuilder('\block_horario\helper')
-            ->setMethods(array('user_is_not_in_cohort'))
-            ->setConstructorArgs(array($config))
-            ->getMock();
-        
+                ->setMethods(array('user_is_not_in_cohort'))
+                ->setConstructorArgs(array($config))
+                ->getMock();
+
         $helper->expects($this->once())
             ->method('user_is_not_in_cohort')
             ->will($this->returnValue(false));
-        
-        $is_course_admin = $helper->is_current_course_available();
-        
-        $this->assertEquals(false, $is_course_admin);
+
+        $iscourseadmin = $helper->is_current_course_available();
+
+        $this->assertEquals(false, $iscourseadmin);
     }
-    
+
 }
