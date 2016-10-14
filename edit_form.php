@@ -117,7 +117,7 @@ class block_horario_edit_form extends block_edit_form {
         $mform->addHelpButton('config_show_block', 'config_show_block', 'block_horario');
     }
 
-    public function validation($data) {
+    public function validation($data, $files) {
         $errors = array();
         if ($this->is_from_greater_equal_to($data)) {
             $errors['config_hour_from'] = get_string('from_to_interval_error', 'block_horario');

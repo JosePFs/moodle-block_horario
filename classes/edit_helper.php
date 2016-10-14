@@ -26,6 +26,8 @@ namespace block_horario;
 
 defined('MOODLE_INTERNAL') || die();
 
+use block_horario\cohorts_service;
+
 /**
  * Configuration edit form helper.
  * Get form options.
@@ -47,14 +49,12 @@ class edit_helper {
      * @return array $cohortsoptions
      */
     public static function get_cohorts_options() {
-        global $CFG;
-        require_once("$CFG->dirroot/cohort/lib.php");
-
-        $cohorts = \cohort_get_all_cohorts();
-
+        $cohortsservice = cohorts_service::instance();
+        $cohorts = $cohortsservice->get_all_cohorts();
+        
         $cohortsoptions = array();
         foreach ($cohorts['cohorts'] as $cohort) {
-            $cohortsoptions[$cohort->id] = strip_tags($cohort->description);
+            $cohortsoptions[$cohort->id] = $cohort->name;
         }
 
         return $cohortsoptions;
