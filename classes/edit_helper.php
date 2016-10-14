@@ -51,7 +51,7 @@ class edit_helper {
     public static function get_cohorts_options() {
         $cohortsservice = cohorts_service::instance();
         $cohorts = $cohortsservice->get_all_cohorts();
-        
+  
         $cohortsoptions = array();
         foreach ($cohorts['cohorts'] as $cohort) {
             $cohortsoptions[$cohort->id] = $cohort->name;

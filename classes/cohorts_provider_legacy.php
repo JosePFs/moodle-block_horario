@@ -37,22 +37,22 @@ use block_horario\cohorts_provider_interface;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class cohorts_provider_legacy implements cohorts_provider_interface {
-    
+
     /**
      * Returns all cohorts.
-     * 
+     *
      * @global stdClass $CFG
      * @return array $cohorts
      */
     public function get_all_cohorts() {
         global $CFG;
-        // Since 2.2
+        // Since 2.2.
         require_once($CFG->libdir.'/accesslib.php');
         require_once("$CFG->dirroot/cohort/lib.php");
-        
+
         $context = \context_system::instance();
         $cohorts = \cohort_get_cohorts($context->id);
-        
+
         return $cohorts;
     }
 }

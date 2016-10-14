@@ -36,12 +36,12 @@ use block_horario\cohorts_provider_interface;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class cohorts_service implements cohorts_provider_interface {
-    
+
     private $provider;
-    
+
     /**
      * Returns cohorts provider depending on Moodle version.
-     * 
+     *
      * @return cohorts_provider_legacy|cohorts_provider
      */
     public static function instance() {
@@ -50,22 +50,22 @@ class cohorts_service implements cohorts_provider_interface {
             case true:
                 $provider = new cohorts_provider();
                 break;
-            
+
             case false:
                 $provider = new cohorts_provider_legacy();
                 break;
         }
-        
+
         return new cohorts_service($provider);
     }
-    
+
     public function __construct(cohorts_provider_interface $provider) {
         $this->provider = $provider;
     }
 
     /**
      * Returns all cohorts.
-     * 
+     *
      * @return array $cohorts
      */
     public function get_all_cohorts() {
