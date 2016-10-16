@@ -150,8 +150,16 @@ class helper {
         $isallowedinterval = !$restrictmode;
         $today = new \DateTime();
         $todayday = (int) $today->format('w');
-        if (!in_array($todayday, $this->pluginconfig->get_days())) {
-            $isallowedinterval = !$isallowedinterval;
+        $todayinrange = in_array($todayday, $this->pluginconfig->get_days());
+
+        // Day is not in restricted range.
+        if (!$todayinrange && $restrictmode) {
+            return true;
+        }
+
+        // Day is not in allowed range.
+        if (!$todayinrange && !$restrictmode) {
+            return false;
         }
 
         $startdatetime = $this->get_start_datetime($today);
