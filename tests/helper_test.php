@@ -105,6 +105,80 @@ class block_horario_helper_testcase extends advanced_testcase {
 
     /**
      * Test course no available cohort member and no admin user
+     * Restricted mode on. Day is not in range.
+     *
+     * @return void
+     */
+    public function test_course_day_not_in_range_restrict_mode() {
+        $this->resetAfterTest(true);
+        $user = $this->getDataGenerator()->create_user();
+        $this->setUser($user);
+        $today = new \DateTime();
+        $todayday = array($today->format('w'));
+
+        $config = new \stdClass();
+        $config->cohorts = ['1'];
+        $alldays = ['0', '1', '2', '3', '4', '5', '6'];
+        $config->days = array_diff($alldays, $todayday);
+        $config->hour_from = '0';
+        $config->minute_from = '0';
+        $config->hour_to = '23';
+        $config->minute_to = '59';
+        $config->restrict_mode = 1;
+
+        $helper = $this->getMockBuilder('\block_horario\helper')
+                ->setMethods(array('user_is_not_in_cohort'))
+                ->setConstructorArgs(array($config))
+                ->getMock();
+
+        $helper->expects($this->once())
+            ->method('user_is_not_in_cohort')
+            ->will($this->returnValue(false));
+
+        $iscourseavailable = $helper->is_current_course_available();
+
+        $this->assertEquals(true, $iscourseavailable);
+    }
+
+    /**
+     * Test course no available cohort member and no admin user
+     * Restricted mode on. Day is not in range.
+     *
+     * @return void
+     */
+    public function test_course_day_not_in_range_allow_mode() {
+        $this->resetAfterTest(true);
+        $user = $this->getDataGenerator()->create_user();
+        $this->setUser($user);
+        $today = new \DateTime();
+        $todayday = array($today->format('w'));
+
+        $config = new \stdClass();
+        $config->cohorts = ['1'];
+        $alldays = ['0', '1', '2', '3', '4', '5', '6'];
+        $config->days = array_diff($alldays, $todayday);
+        $config->hour_from = '0';
+        $config->minute_from = '0';
+        $config->hour_to = '23';
+        $config->minute_to = '59';
+        $config->restrict_mode = 0;
+
+        $helper = $this->getMockBuilder('\block_horario\helper')
+                ->setMethods(array('user_is_not_in_cohort'))
+                ->setConstructorArgs(array($config))
+                ->getMock();
+
+        $helper->expects($this->once())
+            ->method('user_is_not_in_cohort')
+            ->will($this->returnValue(false));
+
+        $iscourseavailable = $helper->is_current_course_available();
+
+        $this->assertEquals(false, $iscourseavailable);
+    }
+
+    /**
+     * Test course no available cohort member and no admin user
      * Restricted mode on. User can not view course in the shedule.
      *
      * @return void
@@ -132,9 +206,9 @@ class block_horario_helper_testcase extends advanced_testcase {
             ->method('user_is_not_in_cohort')
             ->will($this->returnValue(false));
 
-        $iscourseadmin = $helper->is_current_course_available();
+        $iscourseavailable = $helper->is_current_course_available();
 
-        $this->assertEquals(false, $iscourseadmin);
+        $this->assertEquals(false, $iscourseavailable);
     }
 
     /**
@@ -166,8 +240,8 @@ class block_horario_helper_testcase extends advanced_testcase {
             ->method('user_is_not_in_cohort')
             ->will($this->returnValue(false));
 
-        $iscourseadmin = $helper->is_current_course_available();
+        $iscourseavailable = $helper->is_current_course_available();
 
-        $this->assertEquals(true, $iscourseadmin);
+        $this->assertEquals(true, $iscourseavailable);
     }
 }
