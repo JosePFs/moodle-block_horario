@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->version   = 2016100701;
-$plugin->requires  = 2010112400;
+$plugin->requires  = 2011120500;
 $plugin->cron      = 0;
 $plugin->component = 'block_horario';
 $plugin->maturity  = MATURITY_RC;
