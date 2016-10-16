@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Cohorts provider helper.
+ * Cohorts service.
  *
  * @package    block_horario
  * @copyright  2016 José Puente
@@ -45,7 +45,9 @@ class cohorts_service implements cohorts_provider_interface {
      * @return cohorts_provider_legacy|cohorts_provider
      */
     public static function instance() {
-        $isnewversion = function_exists('cohort_get_all_cohorts');
+        self::load_cohort_library();
+        $isnewversion = self::is_new_moodle_version();
+
         switch ($isnewversion) {
             case true:
                 $provider = new cohorts_provider();
@@ -59,7 +61,7 @@ class cohorts_service implements cohorts_provider_interface {
         return new cohorts_service($provider);
     }
 
-    public function __construct(cohorts_provider_interface $provider) {
+    private function __construct(cohorts_provider_interface $provider) {
         $this->provider = $provider;
     }
 
@@ -70,5 +72,27 @@ class cohorts_service implements cohorts_provider_interface {
      */
     public function get_all_cohorts() {
         return $this->provider->get_all_cohorts();
+    }
+
+    /**
+     * Load cohort library.
+     *
+     * @global stdClass $CFG
+     * @return void
+     */
+    private static function load_cohort_library() {
+        global $CFG;
+
+        include_once("$CFG->dirroot/cohort/lib.php");
+    }
+
+    /**
+     * Checks Moodle cohort library version.
+     *
+     * @global stdClass $CFG
+     * @return boolean
+     */
+    private static function is_new_moodle_version() {
+        return function_exists('cohort_get_all_cohorts');
     }
 }

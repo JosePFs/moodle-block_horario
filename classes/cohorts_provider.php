@@ -45,9 +45,6 @@ class cohorts_provider implements cohorts_provider_interface {
      * @return array $cohorts
      */
     public function get_all_cohorts() {
-        global $CFG;
-        require_once("$CFG->dirroot/cohort/lib.php");
-
         $cohorts = \cohort_get_all_cohorts();
 
         return $cohorts;

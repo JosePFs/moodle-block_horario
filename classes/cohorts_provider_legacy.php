@@ -48,7 +48,6 @@ class cohorts_provider_legacy implements cohorts_provider_interface {
         global $CFG;
         // Since 2.2.
         require_once($CFG->libdir.'/accesslib.php');
-        require_once("$CFG->dirroot/cohort/lib.php");
 
         $context = \context_system::instance();
         $cohorts = \cohort_get_cohorts($context->id);
