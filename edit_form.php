@@ -38,6 +38,7 @@ class block_horario_edit_form extends block_edit_form {
     protected function specific_definition($mform) {
         $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
 
+        // If no cohorts, show message.
         $cohortsoptions = edit_helper::get_cohorts_options();
         if (empty($cohortsoptions)) {
             $mform->addElement('html',
@@ -132,6 +133,12 @@ class block_horario_edit_form extends block_edit_form {
         }
 
         $errors = array();
+        if (!isset($data['config_cohorts'])) {
+            $errors['config_cohorts'] = get_string('missingcohorts', 'block_horario');
+        }
+        if (!isset($data['config_days'])) {
+            $errors['config_days'] = get_string('missingdays', 'block_horario');
+        }
         if ($this->is_from_greater_equal_to($data)) {
             $errors['config_hour_from'] = get_string('from_to_interval_error', 'block_horario');
         }

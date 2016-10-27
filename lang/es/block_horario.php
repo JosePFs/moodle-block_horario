@@ -46,4 +46,6 @@ $string['config_restrict_mode'] = 'Modo de acceso';
 $string['config_restrict_mode_help'] = 'Especifica el modo de acceso: modo restringir o modo permitir.';
 $string['config_show_block'] = 'Mostrar información del horario';
 $string['config_show_block_help'] = 'Usuario no administrador del curso puede ver la información del horario del curso en el bloque.';
-$string['blocksettings_warning'] = 'Debe crear una cohorte por lo menos para activar las restricciones.';
+$string['blocksettings_warning'] = 'Debe crear una cohorte al menos para activar las restricciones.';
+$string['missingcohorts'] = 'Debe seleccionar una cohorte al menos';
+$string['missingdays'] = 'Debe seleccionar un día al menos';
