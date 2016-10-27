@@ -25,5 +25,5 @@ $PAGE->set_heading(get_string('page_title', 'block_horario'));
 
 echo $OUTPUT->header();
 $renderer = $PAGE->get_renderer('block_horario');
-echo $renderer->shedule_message();
+echo $renderer->schedule_message();
 echo $OUTPUT->footer();

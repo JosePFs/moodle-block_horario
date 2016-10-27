@@ -25,6 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 use block_horario\helper;
+use block_horario\cohorts_service;
 
 /**
  * class block_horario
@@ -43,6 +44,12 @@ class block_horario extends block_base {
     }
 
     public function specialization() {
+        $cohortsservice = cohorts_service::instance();
+        $systemcohorts = $cohortsservice->get_all_cohorts();
+        if (empty($systemcohorts['cohorts'])) {
+            return false;
+        }
+
         if (isset($this->config)) {
             $this->helper = new helper($this->config);
             if (!$this->helper->is_current_course_available()) {

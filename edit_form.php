@@ -38,6 +38,16 @@ class block_horario_edit_form extends block_edit_form {
     protected function specific_definition($mform) {
         $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
 
+        $cohortsoptions = edit_helper::get_cohorts_options();
+        if (empty($cohortsoptions)) {
+            $mform->addElement('html',
+                    '<div class="alert alert-info">'.
+                        get_string('blocksettings_warning', 'block_horario').
+                    '</div>'
+                    );
+            return true;
+        }
+
         // Select restriction mode.
         $restrict = array();
         $restrict[] = $mform->createElement('radio', 'config_restrict_mode', '', get_string('yes'), 1, array());
@@ -47,7 +57,6 @@ class block_horario_edit_form extends block_edit_form {
         $mform->addHelpButton('config_restrict_mode', 'config_restrict_mode', 'block_horario');
 
         // Select cohorts.
-        $cohortsoptions = edit_helper::get_cohorts_options();
         $selectcohorts = $mform->addElement(
                 'select',
                 'config_cohorts',
@@ -118,6 +127,10 @@ class block_horario_edit_form extends block_edit_form {
     }
 
     public function validation($data, $files) {
+        if (!isset($data['config_hour_from'])) {
+            return array();
+        }
+
         $errors = array();
         if ($this->is_from_greater_equal_to($data)) {
             $errors['config_hour_from'] = get_string('from_to_interval_error', 'block_horario');

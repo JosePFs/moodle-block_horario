@@ -41,7 +41,7 @@ class block_horario_renderer extends plugin_renderer_base {
      * @global stdClass $SESSION
      * @return string $output
      */
-    public function shedule_message() {
+    public function schedule_message() {
         global $SESSION;
 
         $output = html_writer::tag('div',

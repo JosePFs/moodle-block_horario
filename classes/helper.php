@@ -27,6 +27,7 @@ namespace block_horario;
 defined('MOODLE_INTERNAL') || die();
 
 use block_horario\config_builder;
+use block_horario\cohorts_service;
 
 /**
  * Verifications helper.
@@ -94,7 +95,7 @@ class helper {
     private function set_course_admin() {
         global $COURSE;
         $context = \context_course::instance($COURSE->id);
-        $canupdatecourse = \has_capability ('moodle/course:update', $context) ? true : false;
+        $canupdatecourse = \has_capability('moodle/course:update', $context) ? true : false;
 
         return $canupdatecourse;
     }
@@ -124,6 +125,12 @@ class helper {
      * @return boolean $isnotincohort
      */
     protected function user_is_not_in_cohort() {
+        $cohortsservice = cohorts_service::instance();
+        $systemcohorts = $cohortsservice->get_all_cohorts();
+        if (empty($systemcohorts['cohorts'])) {
+            return true;
+        }
+
         global $CFG, $USER;
         require_once("$CFG->dirroot/cohort/lib.php");
 

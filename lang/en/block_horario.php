@@ -46,3 +46,4 @@ $string['config_restrict_mode'] = 'Access mode';
 $string['config_restrict_mode_help'] = 'Set access mode: restrict mode or allow mode.';
 $string['config_show_block'] = 'Show schedule information';
 $string['config_show_block_help'] = 'No course admin user can view schedule information in block.';
+$string['blocksettings_warning'] = 'You must create a cohort at least to enable this restriction options';

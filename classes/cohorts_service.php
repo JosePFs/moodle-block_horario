@@ -35,34 +35,24 @@ use block_horario\cohorts_provider_interface;
  * @copyright  2016 José Puente
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class cohorts_service implements cohorts_provider_interface {
-
-    private $provider;
+class cohorts_service {
 
     /**
-     * Returns cohorts provider depending on Moodle version.
+     * @var \block_horario\cohorts_service $instance
+     */
+    private static $instance;
+
+    /**
+     * Returns service helper that get cohorts depending on Moodle version.
      *
      * @return cohorts_provider_legacy|cohorts_provider
      */
     public static function instance() {
-        self::load_cohort_library();
-        $isnewversion = self::is_new_moodle_version();
-
-        switch ($isnewversion) {
-            case true:
-                $provider = new cohorts_provider();
-                break;
-
-            case false:
-                $provider = new cohorts_provider_legacy();
-                break;
+        if (null === self::$instance) {
+            self::load_cohort_library();
+            self::$instance = new self();
         }
-
-        return new cohorts_service($provider);
-    }
-
-    private function __construct(cohorts_provider_interface $provider) {
-        $this->provider = $provider;
+        return self::$instance;
     }
 
     /**
@@ -71,7 +61,17 @@ class cohorts_service implements cohorts_provider_interface {
      * @return array $cohorts
      */
     public function get_all_cohorts() {
-        return $this->provider->get_all_cohorts();
+        if (function_exists('cohort_get_all_cohorts')) {
+            $cohorts = \cohort_get_all_cohorts();
+        } else {
+            global $CFG;
+            // Since 2.2.
+            require_once($CFG->libdir.'/accesslib.php');
+
+            $context = \context_system::instance();
+            $cohorts = \cohort_get_cohorts($context->id);
+        }
+        return $cohorts;
     }
 
     /**
@@ -84,15 +84,5 @@ class cohorts_service implements cohorts_provider_interface {
         global $CFG;
 
         include_once("$CFG->dirroot/cohort/lib.php");
-    }
-
-    /**
-     * Checks Moodle cohort library version.
-     *
-     * @global stdClass $CFG
-     * @return boolean
-     */
-    private static function is_new_moodle_version() {
-        return function_exists('cohort_get_all_cohorts');
     }
 }
