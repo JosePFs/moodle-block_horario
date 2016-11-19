@@ -26,7 +26,6 @@ namespace block_horario;
 
 defined('MOODLE_INTERNAL') || die();
 
-use block_horario\cohorts_provider_interface;
 
 /**
  * Cohorts service.
@@ -56,21 +55,18 @@ class cohorts_service {
     }
 
     /**
-     * Returns all cohorts.
+     * Returns all system context cohorts.
      *
      * @return array $cohorts
      */
     public function get_all_cohorts() {
-        if (function_exists('cohort_get_all_cohorts')) {
-            $cohorts = \cohort_get_all_cohorts();
-        } else {
-            global $CFG;
-            // Since 2.2.
-            require_once($CFG->libdir.'/accesslib.php');
+        global $CFG;
+        
+        require_once($CFG->libdir.'/accesslib.php');
 
-            $context = \context_system::instance();
-            $cohorts = \cohort_get_cohorts($context->id);
-        }
+        $context = \context_system::instance();
+        $cohorts = \cohort_get_cohorts($context->id);
+
         return $cohorts;
     }
 
