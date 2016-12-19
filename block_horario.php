@@ -125,7 +125,7 @@ class block_horario extends block_base {
         $renderer = $this->page->get_renderer('block_horario');
         $schedule = $renderer->flash_notification($pluginconfig);
 
-        if ($pluginconfig->get_restrict_mode()) {
+        if ($pluginconfig->get_scheduling_mode()) {
             $SESSION->block_horario_flash = get_string('error_restricted_mode', 'block_horario', $schedule);
         } else {
             $SESSION->block_horario_flash = get_string('error_allowed_mode', 'block_horario', $schedule);

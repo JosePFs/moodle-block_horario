@@ -39,7 +39,7 @@ class cohorts_service {
     /**
      * @var \block_horario\cohorts_service $instance
      */
-    private static $instance;
+    private static $instance = null;
 
     /**
      * Returns service helper that get cohorts depending on Moodle version.

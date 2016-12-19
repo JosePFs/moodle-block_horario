@@ -100,7 +100,7 @@ class block_horario_helper_testcase extends advanced_testcase {
         $helper = new helper($config);
         $iscourseadmin = $helper->is_current_course_available();
 
-        $this->assertEquals(true, $iscourseadmin);
+        $this->assertEquals(false, $iscourseadmin);
     }
 
     /**
@@ -124,7 +124,7 @@ class block_horario_helper_testcase extends advanced_testcase {
         $config->minute_from = '0';
         $config->hour_to = '23';
         $config->minute_to = '59';
-        $config->restrict_mode = 1;
+        $config->scheduling_mode = 1;
 
         $helper = $this->getMockBuilder('\block_horario\helper')
                 ->setMethods(array('user_is_not_in_cohort'))
@@ -195,7 +195,7 @@ class block_horario_helper_testcase extends advanced_testcase {
         $config->minute_from = '0';
         $config->hour_to = '23';
         $config->minute_to = '59';
-        $config->restrict_mode = 1;
+        $config->scheduling_mode = 1;
 
         $helper = $this->getMockBuilder('\block_horario\helper')
                 ->setMethods(array('user_is_not_in_cohort'))

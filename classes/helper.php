@@ -107,7 +107,7 @@ class helper {
      */
     private function user_can_view_course() {
         if ($this->user_is_not_in_cohort()) {
-            return true;
+            return false;
         }
 
         if ($this->is_allowed_time_interval()) {
@@ -128,7 +128,7 @@ class helper {
         $cohortsservice = cohorts_service::instance();
         $systemcohorts = $cohortsservice->get_all_cohorts();
         if (empty($systemcohorts['cohorts'])) {
-            return true;
+            return false;
         }
 
         global $CFG, $USER;
@@ -153,7 +153,7 @@ class helper {
      * @return boolean
      */
     private function is_allowed_time_interval() {
-        $restrictmode = (bool) $this->pluginconfig->get_restrict_mode();
+        $restrictmode = (bool) $this->pluginconfig->get_scheduling_mode();
         $isallowedinterval = !$restrictmode;
         $today = new \DateTime();
         $todayday = (int) $today->format('w');

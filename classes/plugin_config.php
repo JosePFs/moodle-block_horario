@@ -43,7 +43,7 @@ class plugin_config {
     private $hourto;
     private $minuteto;
     private $showblock;
-    private $restrictmode;
+    private $schedulingmode;
 
     public function get_cohorts() {
         return $this->cohorts;
@@ -73,8 +73,8 @@ class plugin_config {
         return $this->showblock;
     }
 
-    public function get_restrict_mode() {
-        return $this->restrictmode;
+    public function get_scheduling_mode() {
+        return $this->schedulingmode;
     }
 
     public function set_cohorts($cohorts) {
@@ -105,8 +105,8 @@ class plugin_config {
         $this->showblock = $showblock;
     }
 
-    public function set_restrict_mode($restrictmode) {
-        $this->restrictmode = $restrictmode;
+    public function set_scheduling_mode($shedulingmode) {
+        $this->schedulingmode = $shedulingmode;
     }
 
     public function get_time_from() {

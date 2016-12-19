@@ -42,6 +42,14 @@ class edit_helper {
     const MAX_MINUTE = 59;
     const STEP = 1;
 
+    
+    public static function get_mode_options() {
+        return array(
+            get_string('access_allowed', 'block_horario'),
+            get_string('access_denied', 'block_horario'),
+        );
+    }
+    
     /**
      * Returns all cohorts.
      *

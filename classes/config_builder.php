@@ -46,7 +46,7 @@ class config_builder {
         return new config_builder($config);
     }
 
-    public function __construct(\stdClass $config) {
+    private function __construct(\stdClass $config) {
         $this->config = $config;
         $this->configobject = new plugin_config();
     }

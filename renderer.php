@@ -59,7 +59,7 @@ class block_horario_renderer extends plugin_renderer_base {
      * @return string $output
      */
     public function text(plugin_config $pluginconfig) {
-        if ($pluginconfig->get_restrict_mode()) {
+        if ($pluginconfig->get_scheduling_mode()) {
             $mode = get_string('restricted_access', 'block_horario');
         } else {
             $mode = get_string('granted_access', 'block_horario');
