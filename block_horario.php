@@ -91,7 +91,9 @@ class block_horario extends block_base {
         $blockisconfigured = isset($this->helper);
         if ($blockisconfigured && $this->helper->is_course_admin()) {
             $this->content->text = $this->get_text();
-        } else if ($blockisconfigured && $this->helper->get_plugin_config()->get_show_block()) {
+        } else if ($blockisconfigured && 
+                $this->helper->get_plugin_config()->get_show_block() &&
+                $this->helper->user_is_in_cohort()) {
             $this->content->text = $this->get_text();
         } else {
             $this->content->text = '';

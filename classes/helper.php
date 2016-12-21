@@ -101,13 +101,13 @@ class helper {
     }
 
     /**
-     * Returns truen if current no admin user can view user.
+     * Returns true if current no admin user can view user.
      *
      * @return boolean
      */
     private function user_can_view_course() {
         if ($this->user_is_not_in_cohort()) {
-            return false;
+            return true;
         }
 
         if ($this->is_allowed_time_interval()) {
@@ -128,23 +128,32 @@ class helper {
         $cohortsservice = cohorts_service::instance();
         $systemcohorts = $cohortsservice->get_all_cohorts();
         if (empty($systemcohorts['cohorts'])) {
-            return false;
+            return true;
         }
-
+        
+        return !$this->user_is_in_cohort();
+    }
+    
+    /**
+     * Returns true if current no admin user is in restricted cohort.
+     * 
+     * @global stdClass $CFG
+     * @global stdClass $USER
+     * @return boolean
+     */
+    public function user_is_in_cohort() {
         global $CFG, $USER;
         require_once("$CFG->dirroot/cohort/lib.php");
 
         $cohorts = $this->pluginconfig->get_cohorts();
 
-        $isnotincohort = true;
         foreach ($cohorts as $cohortid) {
             if (\cohort_is_member($cohortid, $USER->id)) {
-                $isnotincohort = false;
-                break;
+                return true;
             }
         }
 
-        return $isnotincohort;
+        return false;
     }
 
     /**

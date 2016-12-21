@@ -136,6 +136,6 @@ class plugin_config {
             $days[$dayindex] = $daysnames[$dayindex];
         }
 
-        return implode(',', $days);
+        return implode(', ', $days);
     }
 }

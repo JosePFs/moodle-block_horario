@@ -100,7 +100,7 @@ class block_horario_helper_testcase extends advanced_testcase {
         $helper = new helper($config);
         $iscourseadmin = $helper->is_current_course_available();
 
-        $this->assertEquals(false, $iscourseadmin);
+        $this->assertEquals(true, $iscourseadmin);
     }
 
     /**
