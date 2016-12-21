@@ -189,7 +189,6 @@ class helper {
 
     /**
      * Checks if datetime between two datetimes.
-     * Use format because we need to check if they are equals regardless seconds.
      *
      * @param \DateTime $today
      * @param \DateTime $startdatetime
@@ -197,9 +196,9 @@ class helper {
      * @return boolean
      */
     private function is_not_datetime_in_interval(\DateTime $today, \DateTime $startdatetime, \DateTime $enddatetime) {
-        $todayhour = $today->format('Hi');
-        $startdatetimehour = $startdatetime->format('Hi');
-        $enddatetimehour = $enddatetime->format('Hi');
+        $todayhour = strtotime($today->format('H:i:s'));
+        $startdatetimehour = strtotime($startdatetime->format('H:i:s'));
+        $enddatetimehour = strtotime($enddatetime->format('H:i:s'));
 
         if ($startdatetimehour <= $todayhour && $todayhour <= $enddatetimehour) {
             return false;

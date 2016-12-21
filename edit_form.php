@@ -85,8 +85,10 @@ class block_horario_edit_form extends block_edit_form {
         $houroptions = edit_helper::get_hour_options();
         $minuteoptions = edit_helper::get_minute_options();
 
+        $timefrom = array();
+        
         // Select hour from.
-        $mform->addElement(
+        $timefrom[] =& $mform->createElement(
                 'select',
                 'config_hour_from',
                 get_string('hour_from', 'block_horario'),
@@ -95,16 +97,21 @@ class block_horario_edit_form extends block_edit_form {
                 );
 
         // Select minute from.
-        $mform->addElement(
+        $timefrom[] =& $mform->createElement(
                 'select',
                 'config_minute_from',
-                get_string('minute_from', 'block_horario'),
+                '',
                 $minuteoptions,
                 array()
                 );
+        
+        // Group hour minute from
+        $mform->addGroup($timefrom, 'config_time_from', get_string('hour_from', 'block_horario'), array(' '), false);
 
+        $timeto = array();
+        
         // Select hour to.
-        $mform->addElement(
+        $timeto[] =& $mform->createElement(
                 'select',
                 'config_hour_to',
                 get_string('hour_to', 'block_horario'),
@@ -113,14 +120,17 @@ class block_horario_edit_form extends block_edit_form {
                 );
 
         // Select minute to.
-        $mform->addElement(
+        $timeto[] =& $mform->createElement(
                 'select',
                 'config_minute_to',
-                get_string('minute_to', 'block_horario'),
+                '',
                 $minuteoptions,
                 array()
                 );
 
+        // Group hour minute to
+        $mform->addGroup($timeto, 'config_time_from', get_string('hour_to', 'block_horario'), array(' '), false);
+        
         // Select show block to student.
         $showblock = array();
         $showblock[] = $mform->createElement('radio', 'config_show_block', '', get_string('yes'), 1, array());
@@ -143,9 +153,9 @@ class block_horario_edit_form extends block_edit_form {
             $errors['config_days'] = get_string('missingdays', 'block_horario');
         }
         if ($this->is_from_greater_equal_to($data)) {
-            $errors['config_hour_from'] = get_string('from_to_interval_error', 'block_horario');
+            $errors['config_time_from'] = get_string('from_to_interval_error', 'block_horario');
         }
-
+        
         return $errors;
     }
 

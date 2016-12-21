@@ -95,7 +95,7 @@ class edit_helper {
     public static function get_hour_options() {
         $hours = array();
         for ($index = 0; $index < self::MAX_HOUR; $index += self::STEP) {
-            $hours[$index] = $index;
+            $hours[$index] = sprintf('%02d', $index);
         }
         return $hours;
     }
@@ -108,7 +108,7 @@ class edit_helper {
     public static function get_minute_options() {
         $minutes = array();
         for ($index = 0; $index <= self::MAX_MINUTE; $index += self::STEP) {
-            $minutes[$index] = $index;
+            $minutes[$index] = sprintf('%02d', $index);
         }
         return $minutes;
     }
