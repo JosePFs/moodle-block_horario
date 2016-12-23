@@ -24,6 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+require('classes/edit_helper.php');
+
 use block_horario\edit_helper;
 
 /**

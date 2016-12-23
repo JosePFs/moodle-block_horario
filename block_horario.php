@@ -24,6 +24,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+require('classes/helper.php');
+require_once('classes/cohorts_service.php');
+
 use block_horario\helper;
 use block_horario\cohorts_service;
 

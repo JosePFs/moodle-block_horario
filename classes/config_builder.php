@@ -26,6 +26,8 @@ namespace block_horario;
 
 defined('MOODLE_INTERNAL') || die();
 
+require('plugin_config.php');
+
 use block_horario\plugin_config;
 
 /**

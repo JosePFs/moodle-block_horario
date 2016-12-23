@@ -26,6 +26,9 @@ namespace block_horario;
 
 defined('MOODLE_INTERNAL') || die();
 
+require('config_builder.php');
+require_once('cohorts_service.php');
+
 use block_horario\config_builder;
 use block_horario\cohorts_service;
 
@@ -142,13 +145,12 @@ class helper {
      * @return boolean
      */
     public function user_is_in_cohort() {
-        global $CFG, $USER;
-        require_once("$CFG->dirroot/cohort/lib.php");
+        global $USER;
 
         $cohorts = $this->pluginconfig->get_cohorts();
 
         foreach ($cohorts as $cohortid) {
-            if (\cohort_is_member($cohortid, $USER->id)) {
+            if ($this->cohort_is_member($cohortid, $USER->id)) {
                 return true;
             }
         }
@@ -235,5 +237,19 @@ class helper {
         $enddatetime->setTime($hourto, $minuteto);
 
         return $enddatetime;
+    }
+
+    /**
+     * Is this user a cohort member?
+     * Included in cohort lib.php from Moodle version 2.6
+     * 
+     * @param int $cohortid
+     * @param int $userid
+     * @return bool
+     */
+    private function cohort_is_member($cohortid, $userid) {
+       global $DB;
+
+       return $DB->record_exists('cohort_members', array('cohortid'=>$cohortid, 'userid'=>$userid));
     }
 }
