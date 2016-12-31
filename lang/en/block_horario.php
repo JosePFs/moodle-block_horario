@@ -49,3 +49,4 @@ $string['config_show_block_help'] = 'No course admin user can view schedule info
 $string['blocksettings_warning'] = 'You must create a cohort at least to enable this restriction options';
 $string['missingcohorts'] = 'You must select a cohort at least';
 $string['missingdays'] = 'You must select a day at least';
+$string['admin_title'] = 'Admin courses schedules';

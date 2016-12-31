@@ -88,27 +88,62 @@ class block_horario extends block_base {
 
         $this->content = new stdClass;
         $this->content->footer = '';
+        
         $blockisconfigured = isset($this->helper);
-        if ($blockisconfigured && $this->helper->is_course_admin()) {
-            $this->content->text = $this->get_text();
-        } else if ($blockisconfigured && 
-                $this->helper->get_plugin_config()->get_show_block() &&
-                $this->helper->user_is_in_cohort()) {
-            $this->content->text = $this->get_text();
-        } else {
+        
+        if (!$blockisconfigured) {
             $this->content->text = '';
+        } else {
+            $renderer = $this->page->get_renderer('block_horario');
+        }
+        
+        if ($blockisconfigured && $this->helper->is_course_admin()) {
+            $this->content->text = $this->get_admin_text($renderer);
+        } elseif ($blockisconfigured && 
+                $this->helper->user_is_in_cohort() &&
+                $this->helper->get_plugin_config()->get_show_block()
+                ) {
+            $this->content->text = $this->get_text($renderer);
         }
 
         return $this->content;
     }
+    
+    /**
+     * Returns course in which block is located. 
+     * 
+     * @global stdClass $DB
+     * @return stdClass $course
+     */
+    public function get_course() {
+        global $DB;
 
+        $coursecontext = $this->context->get_course_context();
+        $course = $DB->get_record('course', array('id' => $coursecontext->instanceid));
+        
+        return $course;
+    }
+    
+    /**
+     * Returns block text and admin link.
+     *
+     * @param block_horario_renderer $renderer
+     * @return string $text
+     */
+    private function get_admin_text(block_horario_renderer $renderer) {
+        $text = $this->get_text($renderer);
+        $text .= $renderer->admin_link();
+
+        return $text;
+    }
+    
     /**
      * Returns block text.
      *
+     * @param block_horario_renderer $renderer
      * @return string $text
      */
-    private function get_text() {
-        $renderer = $this->page->get_renderer('block_horario');
+    private function get_text(block_horario_renderer $renderer) {
         $text = $renderer->text($this->helper->get_plugin_config());
 
         return $text;

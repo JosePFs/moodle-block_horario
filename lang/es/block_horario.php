@@ -49,3 +49,4 @@ $string['config_show_block_help'] = 'Usuario no administrador del curso puede ve
 $string['blocksettings_warning'] = 'Debe crear una cohorte al menos para activar las restricciones.';
 $string['missingcohorts'] = 'Debe seleccionar una cohorte al menos';
 $string['missingdays'] = 'Debe seleccionar un día al menos';
+$string['admin_title'] = 'Gestionar horarios de cursos';

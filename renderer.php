@@ -25,6 +25,8 @@
 defined('MOODLE_INTERNAL') || die;
 
 use block_horario\plugin_config;
+use block_horario\helper;
+use block_horario\admin_helper;
 
 /**
  * block_horario block renderer
@@ -88,5 +90,100 @@ class block_horario_renderer extends plugin_renderer_base {
                     $pluginconfig->get_time_to() . ' ] ';
 
         return $output;
+    }
+    
+    /**
+     * Returns admin course schedules link.
+     * 
+     * @return string $output
+     */
+    public function admin_link() {
+        $output = html_writer::link(
+                new moodle_url('/blocks/horario/admin.php'),
+                get_string('admin_title', 'block_horario')
+                );
+        return $output;
+    }
+    
+    /**
+     * Returns admin table. 
+     * 
+     * @param admin_helper $adminhelper
+     * @return string HTML table
+     */
+    public function admin_table(admin_helper $adminhelper) {
+        $table = new html_table();
+        $table->head = array(get_string('course'), get_string('schedule'), get_string('status'));
+        $table->data = array();
+        
+        $blocks = $adminhelper->get_blocks();
+        foreach ($blocks as $id => $block) {
+            $table->data[$id] = $this->admin_row($block); 
+        }
+        return html_writer::table($table);
+    }
+
+    /**
+     * Returns a table row with course schedule info.
+     * 
+     * @param block_horario $block
+     * @return type
+     */    
+    private function admin_row(block_horario $block) {
+        $row = array();
+        
+        // Course link.
+        $course = $block->get_course();
+        $url = new moodle_url('/course/view.php', array('id' => $course->id));
+        $row[] = html_writer::link($url, $course->fullname);
+     
+        // Schedule info.
+        $helper = new helper($block->config);
+        $config = $helper->get_plugin_config();
+        $row[] = $this->text($config);
+        
+        // Block status.
+        $row[] = $this->status($block);
+        
+        return $row;
+    }
+    
+    /**
+     * Returns block status admin controls.
+     * 
+     * @param block_horario $controls
+     * @return string HTML
+     */
+    private function status(block_horario $block) {
+        if ($block->page->user_can_edit_blocks() && $block->instance_can_be_hidden()) {
+            $url = new moodle_url('/blocks/horario/admin.php', array(
+                'sesskey'=> sesskey(),
+                'id' => $block->get_course()->id)
+                );
+            $blocktitle = $block->title;
+            if (empty($blocktitle)) {
+                $blocktitle = $block->arialabel;
+            }
+
+            $blocktitle = $block->title;
+            if (empty($blocktitle)) {
+                $blocktitle = $block->arialabel;
+            }
+            // Show/hide icon.
+            if ($block->instance->visible) {
+                $url = $url->out(false, array('block_hideid' => $block->instance->id,));
+                $str = new lang_string('hideblock', 'block', $blocktitle);
+                $icon = new pix_icon('t/hide', $str, 'moodle', array('class' => 'icon', 'title' => ''));
+                $attributes = array('class' => 'editing_hide', 'title' => $str);
+            } else {
+                $url = $url->out(false, array('block_showid' => $block->instance->id,));
+                $str = new lang_string('showblock', 'block', $blocktitle);
+                $icon = new pix_icon('t/show', $str, 'moodle', array('class' => 'icon', 'title' => ''));
+                $attributes = array('class' => 'editing_show', 'title' => $str);
+            }
+            $control = $this->output->action_icon($url, $icon, null, $attributes);
+            return $control;
+        }
+        return '';
     }
 }
