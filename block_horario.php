@@ -60,7 +60,7 @@ class block_horario extends block_base {
     }
 
     public function has_config() {
-        return false;
+        return true;
     }
 
     public function applicable_formats() {

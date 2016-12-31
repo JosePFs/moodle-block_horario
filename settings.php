@@ -15,18 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details
+ * class block_horario
  *
- * @package   block_horario
- * @copyright 2016 José Puente <jpuentefs@gmail.com>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    block_horario
+ * @copyright  2016 José Puente
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
-
-$plugin->version   = 2016100705;
-$plugin->requires  = 2013111811;
-$plugin->cron      = 0;
-$plugin->component = 'block_horario';
-$plugin->maturity  = MATURITY_RC;
-$plugin->release   = 'v2.0-r5';
+ 
+defined('MOODLE_INTERNAL') || die;
+ 
+// Create link in admin block menu, .
+$ADMIN->add('blocksettings', new admin_externalpage('block_horario', get_string('pluginname', 'block_horario'),
+        $CFG->wwwroot.'/blocks/horario/admin.php'));
+ 
+// Prevent Moodle from adding settings block in standard location.
+$settings = null;
