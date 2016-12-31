@@ -37,27 +37,45 @@ defined('MOODLE_INTERNAL') || die();
 class admin_helper {
     
     /**
-     * Returns all horario blocks in courses.
+     *
+     * @var block_horario[] $blocks
+     */
+    private $blocks = null;
+    
+    public function __construct() {
+        $this->set_blocks();
+    }
+    
+    /**
+     * Set all horario blocks in courses.
      * 
      * @global \block_horario\stdClass $DB
-     * @return array $blocks
      */
-    public function get_blocks() {
+    private function set_blocks() {
         global $DB;
         
         $getBlocks = function($instance) use ($DB) {
             $block = block_instance('horario', $instance);
-            $instancepositions = $DB->get_record('block_positions', 
-                    array('blockinstanceid' => $instance->id));
-            $block->instance->visible = $instancepositions->visible;  
+            $instancepositions = $DB->get_records('block_positions', 
+                    array('blockinstanceid' => $instance->id), 'id DESC', '*', 0, 1);
+            $instancepositions = reset($instancepositions);
+            if (!$instancepositions) {
+                $block->instance->visible = 1;
+                $block->instance->blockpositionid = null;
+            } else {
+                $block->instance->visible = $instancepositions->visible;
+                $block->instance->blockpositionid = $instancepositions->id;
+            }
             return $block;
         };
         
         $search = array('blockname' => 'horario');
         $instances = $DB->get_records('block_instances', $search);
-        $blocks = array_map($getBlocks, $instances);
-        
-        return $blocks;
+        $this->blocks = array_map($getBlocks, $instances);
+    }
+    
+    public function get_blocks() {
+        return $this->blocks;
     }
     
     /**
@@ -87,6 +105,33 @@ class admin_helper {
      */
     private function update_block_visibility($blockinstanceid, $newvisibility) {
         global $DB;
-        $DB->set_field('block_positions', 'visible', $newvisibility, array('blockinstanceid' => $blockinstanceid));
+        
+        $block = $this->blocks[$blockinstanceid];
+    
+        if (!empty($block->instance->blockpositionid)) {
+            $DB->set_field('block_positions', 'visible', $newvisibility, array('blockinstanceid' => $blockinstanceid));            
+        } else {
+            $this->insert_position($block);
+        }
+        redirect(new \moodle_url('/blocks/horario/admin.php'));
+    }
+    
+    /**
+     * Insert basic position block record.
+     * 
+     * @global \block_horario\stdClass $DB
+     * @param stdClass $instance
+     */
+    private function insert_position($block) {
+        global $DB;
+        
+        $blockposition = new \stdClass;
+        $blockposition->blockinstanceid = $block->instance->id;
+        $blockposition->contextid = $block->instance->parentcontextid;
+        $blockposition->visible = $block->instance->visible;
+        $blockposition->region = $block->instance->defaultregion;
+        $blockposition->weight = $block->instance->defaultweight;
+        $blockposition->pagetype = 'course-view-'. $block->get_course()->format;
+        $DB->insert_record('block_positions', $blockposition);
     }
 }

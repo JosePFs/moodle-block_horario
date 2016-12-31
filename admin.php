@@ -28,8 +28,6 @@ $PAGE->set_url('/blocks/horario/admin.php');
 $PAGE->set_title(get_string('admin_title', 'block_horario'));
 $PAGE->set_heading(get_string('admin_title', 'block_horario'));
 
-echo $OUTPUT->header();
-$renderer = $PAGE->get_renderer('block_horario');
 $adminhelper = new block_horario\admin_helper();
 if ($showid) {
     $adminhelper->show_block($showid);
@@ -37,5 +35,8 @@ if ($showid) {
 if ($hideid) {
     $adminhelper->hide_block($hideid);
 }
+
+echo $OUTPUT->header();
+$renderer = $PAGE->get_renderer('block_horario');
 echo $renderer->admin_table($adminhelper);
 echo $OUTPUT->footer();
