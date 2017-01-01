@@ -46,6 +46,22 @@ class admin_helper {
         $this->set_blocks();
     }
     
+    public static function edit_horario() {
+        global $PAGE, $USER;
+        
+        $edithorario = optional_param('edit_horario', null, PARAM_ALPHA);
+        if (is_null($edithorario)) {
+            return false;
+        }
+        $editon = optional_param('edit', null, PARAM_ALPHA);
+  
+        if ($edithorario === 'on') {
+            $USER->editing = 1;
+            unset($_GET['edit_horario']);
+            redirect(new \moodle_url('/course/view.php', $_GET));
+        }
+    }
+    
     /**
      * Set all horario blocks in courses.
      * 

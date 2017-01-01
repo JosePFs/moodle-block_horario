@@ -166,7 +166,8 @@ class block_horario_renderer extends plugin_renderer_base {
                 'bui_editid' => $block->instance->id,
                 'sesskey'=> sesskey(),
                 'id' => $block->get_course()->id,
-                'notifyeditingon' => 1)
+                'notifyeditingon' => 1,
+                'edit_horario' => 'on')
                 );
             $icon = new pix_icon('t/edit', $str, 'moodle', array('class' => 'icon', 'title' => ''));
             $attributes = array('class' => 'editing_edit', 'title' => $str);

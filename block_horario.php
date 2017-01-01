@@ -26,6 +26,7 @@ defined('MOODLE_INTERNAL') || die();
 
 use block_horario\helper;
 use block_horario\cohorts_service;
+use block_horario\admin_helper;
 
 /**
  * class block_horario
@@ -44,6 +45,7 @@ class block_horario extends block_base {
     }
 
     public function specialization() {
+        admin_helper::edit_horario();
         $cohortsservice = cohorts_service::instance();
         $systemcohorts = $cohortsservice->get_all_cohorts();
         if (empty($systemcohorts['cohorts'])) {
