@@ -158,46 +158,66 @@ class block_horario_renderer extends plugin_renderer_base {
         $controls = '';
         $usercaneditblocks = $block->page->user_can_edit_blocks();
         
-        // Edit block config.
         if ($usercaneditblocks || $block->user_can_edit()) {
-            // Edit config
-            $str = new lang_string('configureblock', 'block', $block->title);
-            $url =  new moodle_url('/course/view.php', array(
-                'bui_editid' => $block->instance->id,
-                'sesskey'=> sesskey(),
-                'id' => $block->get_course()->id,
-                'notifyeditingon' => 1,
-                'edit_horario' => 'on')
-                );
-            $icon = new pix_icon('t/edit', $str, 'moodle', array('class' => 'icon', 'title' => ''));
-            $attributes = array('class' => 'editing_edit', 'title' => $str);
-            $controls .= $this->output->action_icon($url, $icon, null, $attributes);
+            $controls .= $this->edit_control($block);
         }
 
         if ($usercaneditblocks && $block->instance_can_be_hidden()) {
-            $url = new moodle_url('/blocks/horario/admin.php', array(
-                'sesskey'=> sesskey(),
-                'id' => $block->get_course()->id,
-                'notifyeditingon' => 1)
-                );
-            $blocktitle = $block->title;
-            if (empty($blocktitle)) {
-                $blocktitle = $block->arialabel;
-            }
-            // Show/hide icon.
-            if ($block->instance->visible) {
-                $url = $url->out(false, array('block_hideid' => $block->instance->id,));
-                $str = new lang_string('hideblock', 'block', $blocktitle);
-                $icon = new pix_icon('t/hide', $str, 'moodle', array('class' => 'icon', 'title' => ''));
-                $attributes = array('class' => 'editing_hide', 'title' => $str);
-            } else {
-                $url = $url->out(false, array('block_showid' => $block->instance->id,));
-                $str = new lang_string('showblock', 'block', $blocktitle);
-                $icon = new pix_icon('t/show', $str, 'moodle', array('class' => 'icon', 'title' => ''));
-                $attributes = array('class' => 'editing_show', 'title' => $str);
-            }
-            $controls .= $this->output->action_icon($url, $icon, null, $attributes);
+            $controls .= $this->visibility_control($block);
         }
         return $controls;
+    }
+    
+    /**
+     * Returns edit block control.
+     * 
+     * @param block_horario $block
+     * @return string $control HTML
+     */
+    private function edit_control(block_horario $block) {
+        $str = new lang_string('configureblock', 'block', $block->title);
+        $url =  new moodle_url('/course/view.php', array(
+            'bui_editid' => $block->instance->id,
+            'sesskey'=> sesskey(),
+            'id' => $block->get_course()->id,
+            'notifyeditingon' => 1,
+            'edit_horario' => 'on')
+            );
+        $icon = new pix_icon('t/edit', $str, 'moodle', array('class' => 'icon', 'title' => ''));
+        $attributes = array('class' => 'editing_edit', 'title' => $str);
+        $control = $this->output->action_icon($url, $icon, null, $attributes);
+        return $control;
+    }
+    
+    /**
+     * Returns visibility block control.
+     * 
+     * @param block_horario $block
+     * @return string $control HTML
+     */
+    private function visibility_control(block_horario $block) {
+        $url = new moodle_url('/blocks/horario/admin.php', array(
+            'sesskey'=> sesskey(),
+            'id' => $block->get_course()->id,
+            'notifyeditingon' => 1)
+            );
+        $blocktitle = $block->title;
+        if (empty($blocktitle)) {
+            $blocktitle = $block->arialabel;
+        }
+        // Show/hide icon.
+        if ($block->instance->visible) {
+            $url = $url->out(false, array('block_hideid' => $block->instance->id,));
+            $str = new lang_string('hideblock', 'block', $blocktitle);
+            $icon = new pix_icon('t/hide', $str, 'moodle', array('class' => 'icon', 'title' => ''));
+            $attributes = array('class' => 'editing_hide', 'title' => $str);
+        } else {
+            $url = $url->out(false, array('block_showid' => $block->instance->id,));
+            $str = new lang_string('showblock', 'block', $blocktitle);
+            $icon = new pix_icon('t/show', $str, 'moodle', array('class' => 'icon', 'title' => ''));
+            $attributes = array('class' => 'editing_show', 'title' => $str);
+        }
+        $control = $this->output->action_icon($url, $icon, null, $attributes);
+        return $control;
     }
 }
