@@ -151,20 +151,34 @@ class block_horario_renderer extends plugin_renderer_base {
     /**
      * Returns block status admin controls.
      * 
-     * @param block_horario $controls
-     * @return string HTML
+     * @param block_horario $block
+     * @return string $controls HTML
      */
     private function status(block_horario $block) {
-        if ($block->page->user_can_edit_blocks() && $block->instance_can_be_hidden()) {
+        $controls = '';
+        $usercaneditblocks = $block->page->user_can_edit_blocks();
+        
+        // Edit block config.
+        if ($usercaneditblocks || $block->user_can_edit()) {
+            // Edit config
+            $str = new lang_string('configureblock', 'block', $block->title);
+            $url =  new moodle_url('/course/view.php', array(
+                'bui_editid' => $block->instance->id,
+                'sesskey'=> sesskey(),
+                'id' => $block->get_course()->id,
+                'notifyeditingon' => 1)
+                );
+            $icon = new pix_icon('t/edit', $str, 'moodle', array('class' => 'icon', 'title' => ''));
+            $attributes = array('class' => 'editing_edit', 'title' => $str);
+            $controls .= $this->output->action_icon($url, $icon, null, $attributes);
+        }
+
+        if ($usercaneditblocks && $block->instance_can_be_hidden()) {
             $url = new moodle_url('/blocks/horario/admin.php', array(
                 'sesskey'=> sesskey(),
-                'id' => $block->get_course()->id)
+                'id' => $block->get_course()->id,
+                'notifyeditingon' => 1)
                 );
-            $blocktitle = $block->title;
-            if (empty($blocktitle)) {
-                $blocktitle = $block->arialabel;
-            }
-
             $blocktitle = $block->title;
             if (empty($blocktitle)) {
                 $blocktitle = $block->arialabel;
@@ -181,9 +195,8 @@ class block_horario_renderer extends plugin_renderer_base {
                 $icon = new pix_icon('t/show', $str, 'moodle', array('class' => 'icon', 'title' => ''));
                 $attributes = array('class' => 'editing_show', 'title' => $str);
             }
-            $control = $this->output->action_icon($url, $icon, null, $attributes);
-            return $control;
+            $controls .= $this->output->action_icon($url, $icon, null, $attributes);
         }
-        return '';
+        return $controls;
     }
 }
