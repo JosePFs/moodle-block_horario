@@ -46,18 +46,28 @@ class admin_helper {
         $this->set_blocks();
     }
     
+    /**
+     * Check if click on edit block.
+     * 
+     * @global stdClass $USER
+     * @return void|redirect
+     */
     public static function edit_horario() {
         global $USER;
         
         $edithorario = optional_param('edit_horario', null, PARAM_ALPHA);
         if (is_null($edithorario)) {
-            return false;
+            return;
         }
   
         if ($edithorario === 'on' && confirm_sesskey()) {
             $USER->editing = 1;
-            unset($_GET['edit_horario']);
-            redirect(new \moodle_url('/course/view.php', $_GET));
+            $params = array();
+            $params['bui_editid'] = required_param('bui_editid', PARAM_ALPHANUM);
+            $params['sesskey'] = required_param('sesskey', PARAM_RAW);
+            $params['id'] = required_param('id', PARAM_INT);
+            $params['notifyeditingon'] = required_param('id', PARAM_INT);
+            redirect(new \moodle_url('/course/view.php', $params));
         }
     }
     
