@@ -42,9 +42,9 @@ class cohorts_service {
     private static $instance = null;
 
     /**
-     * Returns service helper that get cohorts depending on Moodle version.
+     * Returns service helper that get cohorts.
      *
-     * @return cohorts_provider_legacy|cohorts_provider
+     * @return cohorts_service
      */
     public static function instance() {
         if (null === self::$instance) {
@@ -67,6 +67,19 @@ class cohorts_service {
         $context = \context_system::instance();
         $cohorts = \cohort_get_cohorts($context->id);
 
+        return $cohorts;
+    }
+    
+    /**
+     * Returns cohorts by ids. 
+     * 
+     * @global stdClass $DB
+     * @param array $ids
+     * @return stdClass[] $cohorts
+     */
+    public function get_cohorts_by_ids(array $ids) {
+        global $DB;
+        $cohorts = $DB->get_records_list('cohort', 'id', $ids, null, 'id,name');
         return $cohorts;
     }
 

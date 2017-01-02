@@ -27,6 +27,7 @@ defined('MOODLE_INTERNAL') || die;
 use block_horario\plugin_config;
 use block_horario\helper;
 use block_horario\admin_helper;
+use block_horario\cohorts_service;
 
 /**
  * block_horario block renderer
@@ -113,7 +114,11 @@ class block_horario_renderer extends plugin_renderer_base {
      */
     public function admin_table(admin_helper $adminhelper) {
         $table = new html_table();
-        $table->head = array(get_string('course'), get_string('schedule'), get_string('status'));
+        $table->head = array(
+            get_string('course'),
+            get_string('schedule'), 
+            get_string('cohorts', 'core_cohort'),
+            get_string('status'));
         $table->data = array();
         
         $blocks = $adminhelper->get_blocks();
@@ -142,10 +147,30 @@ class block_horario_renderer extends plugin_renderer_base {
         $config = $helper->get_plugin_config();
         $row[] = $this->text($config);
         
+        // Block cohorts.
+        $row[] = $this->cohorts($config);
+        
         // Block status.
         $row[] = $this->status($block);
         
         return $row;
+    }
+    
+    /**
+     * Returns block cohorts cell.
+     * 
+     * @param plugin_config $pluginconfig
+     * @return string $output HTML
+     */
+    private function cohorts(plugin_config $pluginconfig) {
+        $cohortsids = $pluginconfig->get_cohorts();
+        $cohortsservice = cohorts_service::instance();
+        $cohorts = $cohortsservice->get_cohorts_by_ids($cohortsids);
+        $output = '';
+        foreach ($cohorts as $cohort) {
+            $output .= html_writer::tag('p', $cohort->name);
+        }
+        return $output;
     }
     
     /**
