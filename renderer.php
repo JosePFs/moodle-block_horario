@@ -160,17 +160,19 @@ class block_horario_renderer extends plugin_renderer_base {
      * Returns block cohorts cell.
      * 
      * @param plugin_config $pluginconfig
-     * @return string $output HTML
+     * @return string $link HTML
      */
     private function cohorts(plugin_config $pluginconfig) {
         $cohortsids = $pluginconfig->get_cohorts();
         $cohortsservice = cohorts_service::instance();
         $cohorts = $cohortsservice->get_cohorts_by_ids($cohortsids);
         $output = '';
+        $url = new moodle_url('/cohort/index.php');
         foreach ($cohorts as $cohort) {
             $output .= html_writer::tag('p', $cohort->name);
         }
-        return $output;
+        $link = html_writer::link($url, $output);
+        return $link;
     }
     
     /**
