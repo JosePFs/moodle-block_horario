@@ -132,8 +132,9 @@ class admin_helper {
         global $DB;
         
         $block = $this->blocks[$blockinstanceid];
-    
-        if (!empty($block->instance->blockpositionid)) {
+        $block->instance->visible = $newvisibility;
+        
+        if (null !== $block->instance->blockpositionid) {
             $DB->set_field('block_positions', 'visible', $newvisibility, array('blockinstanceid' => $blockinstanceid));            
         } else {
             $this->insert_position($block);
