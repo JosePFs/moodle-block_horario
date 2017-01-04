@@ -50,3 +50,6 @@ $string['blocksettings_warning'] = 'You must create a cohort at least to enable 
 $string['missingcohorts'] = 'You must select a cohort at least';
 $string['missingdays'] = 'You must select a day at least';
 $string['admin_title'] = 'Admin courses schedules';
+$string['configureblock'] = 'Configure {$a} block';
+$string['hideblock'] = 'Hide {$a} block';
+$string['showblock'] = 'Show {$a} block';

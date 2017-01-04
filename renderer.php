@@ -202,7 +202,7 @@ class block_horario_renderer extends plugin_renderer_base {
      * @return string $control HTML
      */
     private function edit_control(block_horario $block) {
-        $str = new lang_string('configureblock', 'block', $block->title);
+        $str = get_string('configureblock', 'block_horario', $block->title);
         $url =  new moodle_url('/course/view.php', array(
             'bui_editid' => $block->instance->id,
             'sesskey'=> sesskey(),
@@ -235,12 +235,12 @@ class block_horario_renderer extends plugin_renderer_base {
         // Show/hide icon.
         if ($block->instance->visible) {
             $url = $url->out(false, array('block_hideid' => $block->instance->id,));
-            $str = new lang_string('hideblock', 'block', $blocktitle);
+            $str = get_string('hideblock', 'block_horario', $blocktitle);
             $icon = new pix_icon('t/hide', $str, 'moodle', array('class' => 'icon', 'title' => ''));
             $attributes = array('class' => 'editing_hide', 'title' => $str);
         } else {
             $url = $url->out(false, array('block_showid' => $block->instance->id,));
-            $str = new lang_string('showblock', 'block', $blocktitle);
+            $str = get_string('showblock', 'block_horario', $blocktitle);
             $icon = new pix_icon('t/show', $str, 'moodle', array('class' => 'icon', 'title' => ''));
             $attributes = array('class' => 'editing_show', 'title' => $str);
         }

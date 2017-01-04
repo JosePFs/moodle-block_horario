@@ -24,6 +24,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+// Support for < 2.6 Moodle version
+require_once($CFG->dirroot.'/blocks/horario/classes/adapter.php');
+
 use block_horario\helper;
 use block_horario\cohorts_service;
 use block_horario\admin_helper;

@@ -50,3 +50,4 @@ $string['blocksettings_warning'] = 'Debe crear unha cohorte polo menos para acti
 $string['missingcohorts'] = 'Debe seleccionar una cohorte al menos';
 $string['missingdays'] = 'Debe seleccionar un día polo menos';
 $string['admin_title'] = 'Xestionar horarios de cursos';
+$string['configureblock'] = 'Configure bloque {$a}';
