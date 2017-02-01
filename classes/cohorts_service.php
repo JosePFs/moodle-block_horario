@@ -71,13 +71,17 @@ class cohorts_service {
         global $CFG;
         
         require_once($CFG->libdir.'/accesslib.php');
-        require_once($CFG->libdir.'/coursecatlib.php');
 
         $context = \context_system::instance();
         $this->cohorts = \cohort_get_cohorts($context->id);
-        $coursecat = \coursecat::get(0);
-        $categories = $coursecat->get_children();
-
+        
+        if (include_once($CFG->libdir.'/coursecatlib.php')) {
+            $coursecat = \coursecat::get(0);
+            $categories = $coursecat->get_children();
+        } else {
+            $categories = get_categories();
+        }
+        
         foreach ($categories as $category) {
             $categorycontext = \context_coursecat::instance($category->id);
             $categorycohorts = \cohort_get_cohorts($categorycontext->id);
@@ -88,7 +92,7 @@ class cohorts_service {
 
         return $this->cohorts;
     }
-    
+
     /**
      * Returns cohorts by ids. 
      * 
