@@ -75,7 +75,8 @@ class cohorts_service {
         $context = \context_system::instance();
         $this->cohorts = \cohort_get_cohorts($context->id);
         
-        if (include_once($CFG->libdir.'/coursecatlib.php')) {
+        if (file_exists($CFG->libdir.'/coursecatlib.php')) {
+            require_once($CFG->libdir.'/coursecatlib.php');
             $coursecat = \coursecat::get(0);
             $categories = $coursecat->get_children();
         } else {
