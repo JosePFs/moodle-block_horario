@@ -40,6 +40,11 @@ class cohorts_service {
      * @var \block_horario\cohorts_service $instance
      */
     private static $instance = null;
+    
+    /**
+     * @var array $cohorts 
+     */
+    private $cohorts;
 
     /**
      * Returns service helper that get cohorts.
@@ -60,14 +65,28 @@ class cohorts_service {
      * @return array $cohorts
      */
     public function get_all_cohorts() {
+        if (null !== $this->cohorts) {
+            return $this->cohorts;
+        }
         global $CFG;
         
         require_once($CFG->libdir.'/accesslib.php');
+        require_once($CFG->libdir.'/coursecatlib.php');
 
         $context = \context_system::instance();
-        $cohorts = \cohort_get_cohorts($context->id);
+        $this->cohorts = \cohort_get_cohorts($context->id);
+        $coursecat = \coursecat::get(0);
+        $categories = $coursecat->get_children();
 
-        return $cohorts;
+        foreach ($categories as $category) {
+            $categorycontext = \context_coursecat::instance($category->id);
+            $categorycohorts = \cohort_get_cohorts($categorycontext->id);
+            $this->cohorts['cohorts'] = array_merge($this->cohorts['cohorts'], $categorycohorts['cohorts']);
+            $this->cohorts['totalcohorts'] = $this->cohorts['totalcohorts'] + $categorycohorts['totalcohorts'];
+            $this->cohorts['allcohorts'] = $this->cohorts['allcohorts'] + $categorycohorts['allcohorts'];
+        }
+
+        return $this->cohorts;
     }
     
     /**
