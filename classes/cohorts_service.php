@@ -86,9 +86,14 @@ class cohorts_service {
         foreach ($categories as $category) {
             $categorycontext = \context_coursecat::instance($category->id);
             $categorycohorts = \cohort_get_cohorts($categorycontext->id);
+            if (empty($categorycohorts)) {
+                continue;
+            }
             $this->cohorts['cohorts'] = array_merge($this->cohorts['cohorts'], $categorycohorts['cohorts']);
             $this->cohorts['totalcohorts'] = $this->cohorts['totalcohorts'] + $categorycohorts['totalcohorts'];
-            $this->cohorts['allcohorts'] = $this->cohorts['allcohorts'] + $categorycohorts['allcohorts'];
+            if (isset($categorycohorts['allcohorts'])) {
+                $this->cohorts['allcohorts'] = $this->cohorts['allcohorts'] + $categorycohorts['allcohorts'];
+            }
         }
 
         return $this->cohorts;
