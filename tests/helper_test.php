@@ -131,9 +131,7 @@ class block_horario_helper_testcase extends advanced_testcase {
         $helperbuilder->setConstructorArgs(array($config));
         $helper = $helperbuilder->getMock();
 
-        $helper->expects($this->once());
-        $helper->method('user_is_not_in_cohort');
-        $helper->will($this->returnValue(false));
+        $helper->expects($this->once())->method('user_is_not_in_cohort')->will($this->returnValue(false));
 
         $iscourseavailable = $helper->is_current_course_available();
 
@@ -168,9 +166,7 @@ class block_horario_helper_testcase extends advanced_testcase {
         $helperbuilder->setConstructorArgs(array($config));
         $helper = $helperbuilder->getMock();
 
-        $helper->expects($this->once());
-        $helper->method('user_is_not_in_cohort');
-        $helper->will($this->returnValue(false));
+        $helper->expects($this->once())->method('user_is_not_in_cohort')->will($this->returnValue(false));
 
         $iscourseavailable = $helper->is_current_course_available();
 
@@ -202,9 +198,7 @@ class block_horario_helper_testcase extends advanced_testcase {
         $helperbuilder->setConstructorArgs(array($config));
         $helper = $helperbuilder->getMock();
 
-        $helper->expects($this->once());
-        $helper->method('user_is_not_in_cohort');
-        $helper->will($this->returnValue(false));
+        $helper->expects($this->once())->method('user_is_not_in_cohort')->will($this->returnValue(false));
 
         $iscourseavailable = $helper->is_current_course_available();
 
@@ -236,9 +230,7 @@ class block_horario_helper_testcase extends advanced_testcase {
         $helperbuilder->setConstructorArgs(array($config));
         $helper = $helperbuilder->getMock();
 
-        $helper->expects($this->once());
-        $helper->method('user_is_not_in_cohort');
-        $helper->will($this->returnValue(false));
+        $helper->expects($this->once())->method('user_is_not_in_cohort')->will($this->returnValue(false));
 
         $iscourseavailable = $helper->is_current_course_available();
 
