@@ -40,9 +40,9 @@ class cohorts_service {
      * @var \block_horario\cohorts_service $instance
      */
     private static $instance = null;
-    
+
     /**
-     * @var array $cohorts 
+     * @var array $cohorts
      */
     private $cohorts;
 
@@ -69,12 +69,12 @@ class cohorts_service {
             return $this->cohorts;
         }
         global $CFG;
-        
+
         require_once($CFG->libdir.'/accesslib.php');
 
         $context = \context_system::instance();
         $this->cohorts = \cohort_get_cohorts($context->id);
-        
+
         if (file_exists($CFG->libdir.'/coursecatlib.php')) {
             require_once($CFG->libdir.'/coursecatlib.php');
             $coursecat = \coursecat::get(0);
@@ -82,7 +82,7 @@ class cohorts_service {
         } else {
             $categories = get_categories();
         }
-        
+
         foreach ($categories as $category) {
             $categorycontext = \context_coursecat::instance($category->id);
             $categorycohorts = \cohort_get_cohorts($categorycontext->id);
@@ -100,9 +100,8 @@ class cohorts_service {
     }
 
     /**
-     * Returns cohorts by ids. 
-     * 
-     * @global stdClass $DB
+     * Returns cohorts by ids.
+     *
      * @param array $ids
      * @return stdClass[] $cohorts
      */
@@ -115,7 +114,6 @@ class cohorts_service {
     /**
      * Load cohort library.
      *
-     * @global stdClass $CFG
      * @return void
      */
     private static function load_cohort_library() {

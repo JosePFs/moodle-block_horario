@@ -38,19 +38,35 @@ use block_horario\plugin_config;
  */
 class config_builder {
 
+    /**
+     * @var stdClass $config Standard plugin config
+     */
     private $config;
 
+    /**
+     * @var plugin_config $configobject Mapped plugin config
+     */
     private $configobject;
 
     public static function instance(\stdClass $config) {
         return new config_builder($config);
     }
 
+    /**
+     * Constructor
+     *
+     * @param \stdClass $config
+     */
     private function __construct(\stdClass $config) {
         $this->config = $config;
         $this->configobject = new plugin_config();
     }
 
+    /**
+     * Map default standard plugin config to custom
+     *
+     * @return \block_horario\config_builder
+     */
     public function build() {
         foreach ($this->config as $key => $config) {
             $method = "set_$key";

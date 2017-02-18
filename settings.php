@@ -19,12 +19,12 @@
  * @copyright 2016 José Puente <jpuentefs@gmail.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
- 
+
 defined('MOODLE_INTERNAL') || die;
- 
+
 // Create link in admin block menu, .
 $ADMIN->add('blocksettings', new admin_externalpage('block_horario', get_string('pluginname', 'block_horario'),
         $CFG->wwwroot.'/blocks/horario/admin.php'));
- 
+
 // Prevent Moodle from adding settings block in standard location.
 $settings = null;

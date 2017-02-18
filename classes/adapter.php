@@ -27,28 +27,48 @@ namespace block_horario;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Adapts Moodle versions. 
+ * Adapts Moodle versions.
  *
  * @package    block_horario
  * @copyright  2016 José Puente
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class adapter {
-
+    /**
+     * @var integer MOODLE_26_VERSION Minimum version
+     */
     const MOODLE_26_VERSION = 2013110500;
-    
+
+    /**
+     * @var string|null Current version
+     */
     private $version = null;
+
+    /**
+     * @var boolean Is an old version
+     */
     private $isoldversion = false;
-    
+
+    /**
+     * @var adapter $instance Instance
+     */
     private static $instance = null;
-    
+
+    /**
+     * Create self instance
+     *
+     * @return adapter $instance
+     */
     public static function old_versions() {
         if (null === self::$instance) {
             self::$instance = new self();
         }
         return self::$instance;
     }
-    
+
+    /**
+     * It is a singleton, then constructor is private
+     */
     private function __construct() {
         global $CFG;
         require_once($CFG->dirroot.'/lib/adminlib.php');
@@ -58,7 +78,10 @@ class adapter {
             $this->load_classes();
         }
     }
-    
+
+    /**
+     * When is old version, require files.
+     */
     private function load_classes() {
         require_once('admin_helper.php');
         require('cohorts_service.php');

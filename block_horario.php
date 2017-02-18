@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-// Support for < 2.6 Moodle version
+// Support for < 2.6 Moodle version.
 require_once($CFG->dirroot.'/blocks/horario/classes/adapter.php');
 
 use block_horario\helper;
@@ -43,10 +43,16 @@ class block_horario extends block_base {
     /** @var $helper \block_horario\helper */
     private $helper;
 
+    /**
+     * {@inheritDoc}
+     */
     public function init() {
         $this->title = get_string('pluginname', 'block_horario');
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function specialization() {
         admin_helper::edit_horario();
         $cohortsservice = cohorts_service::instance();
@@ -64,10 +70,16 @@ class block_horario extends block_base {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function has_config() {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function applicable_formats() {
         return array(
                     'site-index' => false,
@@ -78,14 +90,23 @@ class block_horario extends block_base {
                     );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function instance_allow_multiple() {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function instance_can_be_docked() {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function get_content() {
         if (null !== $this->content) {
             return $this->content;
@@ -93,18 +114,18 @@ class block_horario extends block_base {
 
         $this->content = new stdClass;
         $this->content->footer = '';
-        
+
         $blockisconfigured = isset($this->helper);
-        
+
         if (!$blockisconfigured) {
             $this->content->text = '';
         } else {
             $renderer = $this->page->get_renderer('block_horario');
         }
-        
+
         if ($blockisconfigured && $this->helper->is_course_admin()) {
             $this->content->text = $this->get_admin_text($renderer);
-        } elseif ($blockisconfigured && 
+        } else if ($blockisconfigured &&
                 $this->helper->user_is_in_cohort() &&
                 $this->helper->get_plugin_config()->get_show_block()
                 ) {
@@ -113,11 +134,10 @@ class block_horario extends block_base {
 
         return $this->content;
     }
-    
+
     /**
-     * Returns course in which block is located. 
-     * 
-     * @global stdClass $DB
+     * Returns course in which block is located.
+     *
      * @return stdClass $course
      */
     public function get_course() {
@@ -125,10 +145,10 @@ class block_horario extends block_base {
 
         $coursecontext = $this->context->get_course_context();
         $course = $DB->get_record('course', array('id' => $coursecontext->instanceid));
-        
+
         return $course;
     }
-    
+
     /**
      * Returns block text and admin link.
      *
@@ -141,7 +161,7 @@ class block_horario extends block_base {
 
         return $text;
     }
-    
+
     /**
      * Returns block text.
      *
@@ -157,7 +177,6 @@ class block_horario extends block_base {
     /**
      * Set flash error message.
      *
-     * @global stdClass $SESSION
      * @return void
      */
     private function prepare_notification() {

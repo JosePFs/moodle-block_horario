@@ -38,28 +38,42 @@ use block_horario\cohorts_service;
  */
 class edit_helper {
 
+    /**
+     * @var integer MAX_HOUR Max selector hour limit
+     */
     const MAX_HOUR = 24;
+
+    /**
+     * @var integer MAX_MINUTE Max selector minute limit
+     */
     const MAX_MINUTE = 59;
+
+    /**
+     * @var integer STEP Step between hours and minutes
+     */
     const STEP = 1;
 
-    
+    /**
+     * Returns mode options
+     *
+     * @return array Mode options
+     */
     public static function get_mode_options() {
         return array(
             get_string('access_allowed', 'block_horario'),
             get_string('access_denied', 'block_horario'),
         );
     }
-    
+
     /**
      * Returns all cohorts.
      *
-     * @global stdClass $CFG
      * @return array $cohortsoptions
      */
     public static function get_cohorts_options() {
         $cohortsservice = cohorts_service::instance();
         $cohorts = $cohortsservice->get_all_cohorts();
-  
+
         $cohortsoptions = array();
         foreach ($cohorts['cohorts'] as $cohort) {
             $cohortsoptions[$cohort->id] = $cohort->name;

@@ -45,9 +45,7 @@ class helper {
     private $pluginconfig;
 
     public function __construct(\stdClass $config) {
-        $this->pluginconfig = config_builder::instance($config)
-                                ->build()
-                                ->get_config();
+        $this->pluginconfig = config_builder::instance($config)->build()->get_config();
         $this->iscourseadmin = $this->set_course_admin();
     }
 
@@ -130,13 +128,13 @@ class helper {
         if (empty($systemcohorts['cohorts'])) {
             return true;
         }
-        
+
         return !$this->user_is_in_cohort();
     }
-    
+
     /**
      * Returns true if current no admin user is in restricted cohort.
-     * 
+     *
      * @global stdClass $CFG
      * @global stdClass $USER
      * @return boolean

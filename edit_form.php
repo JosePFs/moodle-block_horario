@@ -35,6 +35,9 @@ use block_horario\edit_helper;
  */
 class block_horario_edit_form extends block_edit_form {
 
+    /**
+     * {@inheritDoc}
+     */
     protected function specific_definition($mform) {
         $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
 
@@ -54,7 +57,7 @@ class block_horario_edit_form extends block_edit_form {
                 'select',
                 'config_scheduling_mode',
                 get_string('config_scheduling_mode', 'block_horario'),
-                edit_helper::get_mode_options(), 
+                edit_helper::get_mode_options(),
                 array()
                 );
         $schedulingmode->setMultiple(false);
@@ -86,7 +89,7 @@ class block_horario_edit_form extends block_edit_form {
         $minuteoptions = edit_helper::get_minute_options();
 
         $timefrom = array();
-        
+
         // Select hour from.
         $timefrom[] =& $mform->createElement(
                 'select',
@@ -104,12 +107,12 @@ class block_horario_edit_form extends block_edit_form {
                 $minuteoptions,
                 array()
                 );
-        
-        // Group hour minute from
+
+        // Group hour minute from.
         $mform->addGroup($timefrom, 'config_time_from', get_string('hour_from', 'block_horario'), array(' '), false);
 
         $timeto = array();
-        
+
         // Select hour to.
         $timeto[] =& $mform->createElement(
                 'select',
@@ -128,9 +131,9 @@ class block_horario_edit_form extends block_edit_form {
                 array()
                 );
 
-        // Group hour minute to
+        // Group hour minute to.
         $mform->addGroup($timeto, 'config_time_from', get_string('hour_to', 'block_horario'), array(' '), false);
-        
+
         // Select show block to student.
         $showblock = array();
         $showblock[] = $mform->createElement('radio', 'config_show_block', '', get_string('yes'), 1, array());
@@ -140,6 +143,9 @@ class block_horario_edit_form extends block_edit_form {
         $mform->addHelpButton('config_show_block', 'config_show_block', 'block_horario');
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function validation($data, $files) {
         if (!isset($data['config_hour_from'])) {
             return array();
@@ -155,7 +161,7 @@ class block_horario_edit_form extends block_edit_form {
         if ($this->is_from_greater_equal_to($data)) {
             $errors['config_time_from'] = get_string('from_to_interval_error', 'block_horario');
         }
-        
+
         return $errors;
     }
 

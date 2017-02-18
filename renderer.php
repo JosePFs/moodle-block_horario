@@ -92,10 +92,10 @@ class block_horario_renderer extends plugin_renderer_base {
 
         return $output;
     }
-    
+
     /**
      * Returns admin course schedules link.
-     * 
+     * usr/bin/phpcs
      * @return string $output
      */
     public function admin_link() {
@@ -105,10 +105,10 @@ class block_horario_renderer extends plugin_renderer_base {
                 );
         return $output;
     }
-    
+
     /**
-     * Returns admin table. 
-     * 
+     * Returns admin table.
+     *
      * @param admin_helper $adminhelper
      * @return string HTML table
      */
@@ -116,49 +116,49 @@ class block_horario_renderer extends plugin_renderer_base {
         $table = new html_table();
         $table->head = array(
             get_string('course'),
-            get_string('schedule'), 
+            get_string('schedule'),
             get_string('cohorts', 'core_cohort'),
             get_string('status'));
         $table->data = array();
-        
+
         $blocks = $adminhelper->get_blocks();
         foreach ($blocks as $id => $block) {
-            $table->data[$id] = $this->admin_row($block); 
+            $table->data[$id] = $this->admin_row($block);
         }
         return html_writer::table($table);
     }
 
     /**
      * Returns a table row with course schedule info.
-     * 
+     *
      * @param block_horario $block
      * @return type
-     */    
+     */
     private function admin_row(block_horario $block) {
         $row = array();
-        
+
         // Course link.
         $course = $block->get_course();
         $url = new moodle_url('/course/view.php', array('id' => $course->id));
         $row[] = html_writer::link($url, $course->fullname);
-     
+
         // Schedule info.
         $helper = new helper($block->config);
         $config = $helper->get_plugin_config();
         $row[] = $this->text($config);
-        
+
         // Block cohorts.
         $row[] = $this->cohorts($config);
-        
+
         // Block status.
         $row[] = $this->status($block);
-        
+
         return $row;
     }
-    
+
     /**
      * Returns block cohorts cell.
-     * 
+     *
      * @param plugin_config $pluginconfig
      * @return string $link HTML
      */
@@ -174,17 +174,17 @@ class block_horario_renderer extends plugin_renderer_base {
         $link = html_writer::link($url, $output);
         return $link;
     }
-    
+
     /**
      * Returns block status admin controls.
-     * 
+     *
      * @param block_horario $block
      * @return string $controls HTML
      */
     private function status(block_horario $block) {
         $controls = '';
         $usercaneditblocks = $block->page->user_can_edit_blocks();
-        
+
         if ($usercaneditblocks || $block->user_can_edit()) {
             $controls .= $this->edit_control($block);
         }
@@ -194,18 +194,18 @@ class block_horario_renderer extends plugin_renderer_base {
         }
         return $controls;
     }
-    
+
     /**
      * Returns edit block control.
-     * 
+     *
      * @param block_horario $block
      * @return string $control HTML
      */
     private function edit_control(block_horario $block) {
         $str = get_string('configureblock', 'block_horario', $block->title);
-        $url =  new moodle_url('/course/view.php', array(
+        $url = new moodle_url('/course/view.php', array(
             'bui_editid' => $block->instance->id,
-            'sesskey'=> sesskey(),
+            'sesskey' => sesskey(),
             'id' => $block->get_course()->id,
             'notifyeditingon' => 1,
             'edit_horario' => 'on')
@@ -215,16 +215,16 @@ class block_horario_renderer extends plugin_renderer_base {
         $control = $this->output->action_icon($url, $icon, null, $attributes);
         return $control;
     }
-    
+
     /**
      * Returns visibility block control.
-     * 
+     *
      * @param block_horario $block
      * @return string $control HTML
      */
     private function visibility_control(block_horario $block) {
         $url = new moodle_url('/blocks/horario/admin.php', array(
-            'sesskey'=> sesskey(),
+            'sesskey' => sesskey(),
             'id' => $block->get_course()->id,
             'notifyeditingon' => 1)
             );
@@ -234,12 +234,12 @@ class block_horario_renderer extends plugin_renderer_base {
         }
         // Show/hide icon.
         if ($block->instance->visible) {
-            $url = $url->out(false, array('block_hideid' => $block->instance->id,));
+            $url = $url->out(false, array('block_hideid' => $block->instance->id));
             $str = get_string('hideblock', 'block_horario', $blocktitle);
             $icon = new pix_icon('t/hide', $str, 'moodle', array('class' => 'icon', 'title' => ''));
             $attributes = array('class' => 'editing_hide', 'title' => $str);
         } else {
-            $url = $url->out(false, array('block_showid' => $block->instance->id,));
+            $url = $url->out(false, array('block_showid' => $block->instance->id));
             $str = get_string('showblock', 'block_horario', $blocktitle);
             $icon = new pix_icon('t/show', $str, 'moodle', array('class' => 'icon', 'title' => ''));
             $attributes = array('class' => 'editing_show', 'title' => $str);

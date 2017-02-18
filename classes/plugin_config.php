@@ -36,91 +36,185 @@ defined('MOODLE_INTERNAL') || die();
  */
 class plugin_config {
 
+    /**
+     * @var array $cohorts Ids
+     */
     private $cohorts;
+
+    /**
+     * @var array $days
+     */
     private $days;
+
+    /**
+     * @var integer $hourfrom
+     */
     private $hourfrom;
+
+    /**
+     * @var integer $minutefrom
+     */
     private $minutefrom;
+
+    /**
+     * @var integer $hourto
+     */
     private $hourto;
+
+    /**
+     * @var integer $minuteto
+     */
     private $minuteto;
+
+    /**
+     * @var integer $showblock
+     */
     private $showblock;
+
+    /**
+     * @var integer $schedulingmode
+     */
     private $schedulingmode;
 
+    /**
+     * @return array Cohorts
+     */
     public function get_cohorts() {
         return $this->cohorts;
     }
 
+    /**
+     * @return integer Days
+     */
     public function get_days() {
         return $this->days;
     }
 
+    /**
+     * @return integer Hour from
+     */
     public function get_hour_from() {
         return $this->hourfrom;
     }
 
+    /**
+     * @return integer Minute from
+     */
     public function get_minute_from() {
         return $this->minutefrom;
     }
 
+    /**
+     * @return integer Hour to
+     */
     public function get_hour_to() {
         return $this->hourto;
     }
 
+    /**
+     * @return integer Minute to
+     */
     public function get_minute_to() {
         return $this->minuteto;
     }
 
+    /**
+     * @return integer Show block
+     */
     public function get_show_block() {
         return $this->showblock;
     }
 
+    /**
+     * @return integer Scheduling mode
+     */
     public function get_scheduling_mode() {
         return $this->schedulingmode;
     }
 
+    /**
+     * @param array $cohorts
+     */
     public function set_cohorts($cohorts) {
         $this->cohorts = $cohorts;
     }
 
+    /**
+     * @param integer $days
+     */
     public function set_days($days) {
         $this->days = $days;
     }
 
+    /**
+     * @param integer $hourfrom
+     */
     public function set_hour_from($hourfrom) {
         $this->hourfrom = $hourfrom;
     }
 
+    /**
+     * @param integer $minutefrom
+     */
     public function set_minute_from($minutefrom) {
         $this->minutefrom = $minutefrom;
     }
 
+    /**
+     * @param integer $hourto
+     */
     public function set_hour_to($hourto) {
         $this->hourto = $hourto;
     }
 
+    /**
+     * @param integer $minuteto
+     */
     public function set_minute_to($minuteto) {
         $this->minuteto = $minuteto;
     }
 
+    /**
+     * @param integer $showblock
+     */
     public function set_show_block($showblock) {
         $this->showblock = $showblock;
     }
 
+    /**
+     * @param integer $shedulingmode
+     */
     public function set_scheduling_mode($shedulingmode) {
         $this->schedulingmode = $shedulingmode;
     }
 
+    /**
+     * Returns formated time from
+     *
+     * @return string $time
+     */
     public function get_time_from() {
         $time = sprintf('%02d:%02d', $this->get_hour_from(), $this->get_minute_from());
 
         return $time;
     }
 
+    /**
+     * Returns formated time to
+     *
+     * @return string $time
+     */
     public function get_time_to() {
         $time = sprintf('%02d:%02d', $this->get_hour_to(), $this->get_minute_to());
 
         return $time;
     }
 
+    /**
+     * Returns formated week days
+     *
+     * @return string Days
+     */
     public function get_week_days() {
         $daysnames = [
             get_string('sunday', 'block_horario'),
