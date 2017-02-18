@@ -41,7 +41,6 @@ class block_horario_renderer extends plugin_renderer_base {
     /**
      * Returns HTML error access to course message.
      *
-     * @global stdClass $SESSION
      * @return string $output
      */
     public function schedule_message() {
@@ -132,7 +131,7 @@ class block_horario_renderer extends plugin_renderer_base {
      * Returns a table row with course schedule info.
      *
      * @param block_horario $block
-     * @return type
+     * @return array $row
      */
     private function admin_row(block_horario $block) {
         $row = array();

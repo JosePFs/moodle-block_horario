@@ -36,7 +36,10 @@ use block_horario\edit_helper;
 class block_horario_edit_form extends block_edit_form {
 
     /**
-     * {@inheritDoc}
+     * Specific form definition
+     *
+     * @param MoodleQuickForm $mform
+     * @return boolean|null
      */
     protected function specific_definition($mform) {
         $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
@@ -144,7 +147,11 @@ class block_horario_edit_form extends block_edit_form {
     }
 
     /**
-     * {@inheritDoc}
+     * Return form errors
+     *
+     * @param array $data
+     * @param array $files
+     * @return array $errors
      */
     public function validation($data, $files) {
         if (!isset($data['config_hour_from'])) {

@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Admin helper.
+ * Admin helper
  *
  * @package    block_horario
  * @copyright  2016 José Puente
@@ -27,8 +27,7 @@ namespace block_horario;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Admin helper.
- * Manage admin blocks data.
+ * Manage admin blocks data
  *
  * @package    block_horario
  * @copyright  2016 José Puente

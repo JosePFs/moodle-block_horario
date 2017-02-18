@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Config builder.
+ * Config builder
  *
  * @package    block_horario
  * @copyright  2016 José Puente
@@ -29,8 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 use block_horario\plugin_config;
 
 /**
- * Config Builder.
- * Transforms stdClass to plugin_class.
+ * Transforms stdClass to plugin_class
  *
  * @package    block_horario
  * @copyright  2016 José Puente
@@ -48,6 +47,12 @@ class config_builder {
      */
     private $configobject;
 
+    /**
+     * Creates instance
+     *
+     * @param \stdClass $config
+     * @return \block_horario\config_builder
+     */
     public static function instance(\stdClass $config) {
         return new config_builder($config);
     }

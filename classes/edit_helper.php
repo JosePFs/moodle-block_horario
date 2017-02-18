@@ -29,8 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 use block_horario\cohorts_service;
 
 /**
- * Configuration edit form helper.
- * Get form options.
+ * Gets form options.
  *
  * @package    block_horario
  * @copyright  2016 José Puente

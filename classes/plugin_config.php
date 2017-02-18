@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin configuration.
+ * Plugin configuration
  *
  * @package    block_horario
  * @copyright  2016 José Puente
@@ -27,7 +27,6 @@ namespace block_horario;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Plugin configuration.
  * DTO that holds block configuration.
  *
  * @package    block_horario
@@ -77,6 +76,7 @@ class plugin_config {
     private $schedulingmode;
 
     /**
+     * Gets cohorts
      * @return array Cohorts
      */
     public function get_cohorts() {
@@ -84,6 +84,7 @@ class plugin_config {
     }
 
     /**
+     * Gets days
      * @return integer Days
      */
     public function get_days() {
@@ -91,6 +92,7 @@ class plugin_config {
     }
 
     /**
+     * Gets hour from
      * @return integer Hour from
      */
     public function get_hour_from() {
@@ -98,6 +100,7 @@ class plugin_config {
     }
 
     /**
+     * Gets minute from
      * @return integer Minute from
      */
     public function get_minute_from() {
@@ -105,6 +108,7 @@ class plugin_config {
     }
 
     /**
+     * Gets hour to
      * @return integer Hour to
      */
     public function get_hour_to() {
@@ -112,6 +116,7 @@ class plugin_config {
     }
 
     /**
+     * Gets minute to
      * @return integer Minute to
      */
     public function get_minute_to() {
@@ -119,6 +124,7 @@ class plugin_config {
     }
 
     /**
+     * Gets show block option
      * @return integer Show block
      */
     public function get_show_block() {
@@ -126,6 +132,7 @@ class plugin_config {
     }
 
     /**
+     * Gets scheduling mode
      * @return integer Scheduling mode
      */
     public function get_scheduling_mode() {
@@ -133,6 +140,7 @@ class plugin_config {
     }
 
     /**
+     * Sets cohorts
      * @param array $cohorts
      */
     public function set_cohorts($cohorts) {
@@ -140,6 +148,7 @@ class plugin_config {
     }
 
     /**
+     * Sets days
      * @param integer $days
      */
     public function set_days($days) {
@@ -147,6 +156,7 @@ class plugin_config {
     }
 
     /**
+     * Sets hour from
      * @param integer $hourfrom
      */
     public function set_hour_from($hourfrom) {
@@ -154,6 +164,7 @@ class plugin_config {
     }
 
     /**
+     * Sets minute from
      * @param integer $minutefrom
      */
     public function set_minute_from($minutefrom) {
@@ -161,6 +172,7 @@ class plugin_config {
     }
 
     /**
+     * Sets hour to
      * @param integer $hourto
      */
     public function set_hour_to($hourto) {
@@ -168,6 +180,7 @@ class plugin_config {
     }
 
     /**
+     * Sets minute to
      * @param integer $minuteto
      */
     public function set_minute_to($minuteto) {
@@ -175,6 +188,7 @@ class plugin_config {
     }
 
     /**
+     * Sets show block option
      * @param integer $showblock
      */
     public function set_show_block($showblock) {
@@ -182,6 +196,7 @@ class plugin_config {
     }
 
     /**
+     * Sets scheduling mode
      * @param integer $shedulingmode
      */
     public function set_scheduling_mode($shedulingmode) {

@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Verifications helper.
+ * Verifications helper
  *
  * @package    block_horario
  * @copyright  2016 José Puente
@@ -30,7 +30,6 @@ use block_horario\config_builder;
 use block_horario\cohorts_service;
 
 /**
- * Verifications helper.
  * Checks if user can or not view current course.
  *
  * @package    block_horario
@@ -39,11 +38,21 @@ use block_horario\cohorts_service;
  */
 class helper {
 
+    /**
+     * @var boolean $iscourseadmin
+     */
     private $iscourseadmin;
 
-    /** @var $pluginconfig \block_horario\plugin_config  */
+    /**
+     * @var $pluginconfig \block_horario\plugin_config
+     */
     private $pluginconfig;
 
+    /**
+     * Constructor
+     *
+     * @param \stdClass $config
+     */
     public function __construct(\stdClass $config) {
         $this->pluginconfig = config_builder::instance($config)->build()->get_config();
         $this->iscourseadmin = $this->set_course_admin();
@@ -87,7 +96,6 @@ class helper {
     /**
      * Returns true if current user can edit/update course.
      *
-     * @global stdClass $COURSE
      * @return boolean
      */
     private function set_course_admin() {
@@ -118,8 +126,6 @@ class helper {
     /**
      * Returns true if current no admin user is not in restricted cohort.
      *
-     * @global stdClass $CFG
-     * @global stdClass $USER
      * @return boolean $isnotincohort
      */
     protected function user_is_not_in_cohort() {
@@ -135,8 +141,6 @@ class helper {
     /**
      * Returns true if current no admin user is in restricted cohort.
      *
-     * @global stdClass $CFG
-     * @global stdClass $USER
      * @return boolean
      */
     public function user_is_in_cohort() {
