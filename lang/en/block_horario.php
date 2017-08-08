@@ -25,6 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'Course schedules';
+$string['horario:addinstance'] = 'Add a new course schedules block';
 $string['courses'] = 'Courses';
 $string['cohorts'] = 'Cohorts';
 $string['hour_from'] = 'From hour:';
