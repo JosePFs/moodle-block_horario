@@ -36,6 +36,11 @@ use block_horario\edit_helper;
 class block_horario_edit_form extends block_edit_form {
 
     /**
+     * Max cohorts select element options vertical size.
+     */
+    const MAX_COHORTS_SIZE = 20;
+
+    /**
      * Specific form definition
      *
      * @param MoodleQuickForm $mform
@@ -67,12 +72,14 @@ class block_horario_edit_form extends block_edit_form {
         $mform->addHelpButton('config_scheduling_mode', 'config_scheduling_mode', 'block_horario');
 
         // Select cohorts.
+        $countcohorts = count($cohortsoptions);
+        $sizeselectcohorts = $countcohorts <= self::MAX_COHORTS_SIZE ? $countcohorts : self::MAX_COHORTS_SIZE;
         $selectcohorts = $mform->addElement(
                 'select',
                 'config_cohorts',
                 get_string('cohorts', 'block_horario'),
                 $cohortsoptions,
-                array('size' => count($cohortsoptions))
+                array('size' => $sizeselectcohorts)
                 );
         $selectcohorts->setMultiple(true);
         $mform->addHelpButton('config_cohorts', 'config_cohorts', 'block_horario');

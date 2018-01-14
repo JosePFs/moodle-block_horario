@@ -73,7 +73,7 @@ class cohorts_service {
         require_once($CFG->libdir.'/accesslib.php');
 
         $context = \context_system::instance();
-        $this->cohorts = \cohort_get_cohorts($context->id);
+        $this->cohorts = \cohort_get_cohorts($context->id, 0, 0);
 
         if (file_exists($CFG->libdir.'/coursecatlib.php')) {
             require_once($CFG->libdir.'/coursecatlib.php');
@@ -85,7 +85,7 @@ class cohorts_service {
 
         foreach ($categories as $category) {
             $categorycontext = \context_coursecat::instance($category->id);
-            $categorycohorts = \cohort_get_cohorts($categorycontext->id);
+            $categorycohorts = \cohort_get_cohorts($categorycontext->id, 0, 0);
             if (empty($categorycohorts)) {
                 continue;
             }
