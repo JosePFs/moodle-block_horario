@@ -80,7 +80,7 @@ class cohorts_service {
             $coursecat = \coursecat::get(0);
             $categories = $coursecat->get_children();
         } else {
-            $categories = get_categories();
+            $categories = \core_course_category::get_all();
         }
 
         foreach ($categories as $category) {
