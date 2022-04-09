@@ -24,8 +24,6 @@
 
 namespace block_horario;
 
-defined('MOODLE_INTERNAL') || die();
-
 use block_horario\config_builder;
 use block_horario\cohorts_service;
 

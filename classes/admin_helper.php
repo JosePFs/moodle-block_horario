@@ -24,8 +24,6 @@
 
 namespace block_horario;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Manage admin blocks data
  *

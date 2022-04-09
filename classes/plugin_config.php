@@ -24,8 +24,6 @@
 
 namespace block_horario;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * DTO that holds block configuration.
  *

@@ -24,9 +24,6 @@
 
 namespace block_horario;
 
-defined('MOODLE_INTERNAL') || die();
-
-
 /**
  * Cohorts service.
  *

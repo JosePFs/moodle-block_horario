@@ -22,8 +22,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
-
 use block_horario\plugin_config;
 use block_horario\helper;
 use block_horario\admin_helper;

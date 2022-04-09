@@ -23,7 +23,7 @@
  * @since      Moodle 3.0
  */
 
-defined('MOODLE_INTERNAL') || die();
+namespace block_horario;
 
 use block_horario\helper;
 
